@@ -1,5 +1,6 @@
 package com.example.davidebelvedere.spesaapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        DataAccessUtils.initDataSource(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
@@ -43,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        Toast toast= Toast.makeText(this,"Speraci",Toast.LENGTH_SHORT);
-        toast.show();
+        Intent intent = new Intent(this, UserListActivity.class);
+        startActivity(intent);
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
