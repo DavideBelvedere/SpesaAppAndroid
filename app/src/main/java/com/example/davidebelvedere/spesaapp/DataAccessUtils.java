@@ -29,4 +29,9 @@ public class DataAccessUtils {
         lista.add(new UserList(item));
         DataContainerSingleton.getInstance().setItemList(lista);
     }
+
+    public static void removeItem(int position){
+        List<UserList> lista = DataContainerSingleton.getInstance().getItemList();
+        lista.remove(position);
+    }
 }

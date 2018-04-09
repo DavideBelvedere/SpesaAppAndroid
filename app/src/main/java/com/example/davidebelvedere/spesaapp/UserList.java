@@ -8,14 +8,14 @@ import java.util.List;
 
 class UserList {
     private String name;
-    private List<String> elementi;
+    private List<String> prodotto;
 
     public UserList(String name) {
         this.name = name;
     }
 
     public void addElement(String element){
-        elementi.add(element);
+        prodotto.add(element);
     }
 
     public String getName() {
