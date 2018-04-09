@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_height="match_parent" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".ui.activity.MainActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/linearLoginMarginTop"
+        android:text="@string/titleRegistrati"
+        android:textStyle="italic"
+
+        android:textSize="@dimen/registrati" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/linearLoginMarginTop"
+        android:src="@drawable/profile"
+        app:civ_border_width="0dp"
+
+        />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/marginLinearLogin"
+        android:layout_marginStart="@dimen/marginLinearLogin"
+        android:layout_marginTop="@dimen/linearLoginMarginTop"
+        android:layout_marginBottom="@dimen/linearLoginMarginTop"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/username"
+            android:textSize="@dimen/registerTextView"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/username"
+            android:textSize="@dimen/registerTextView"
+            android:id="@+id/username"/>
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/littleMargin"
+        android:text="@string/password"
+        android:textSize="@dimen/registerTextView"
+        android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:textSize="@dimen/registerTextView"
+            android:id="@+id/password"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/littleMargin"
+            android:text="@string/email"
+            android:textSize="@dimen/registerTextView"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email"
+            android:textSize="@dimen/registerTextView"
+            android:id="@+id/email"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/littleMargin"
+            android:text="@string/nome"
+            android:textSize="@dimen/registerTextView"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/nome"
+            android:textSize="@dimen/registerTextView"
+            android:id="@+id/nome"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/littleMargin"
+            android:text="@string/cognome"
+            android:textSize="@dimen/registerTextView"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/cognome"
+            android:textSize="@dimen/registerTextView"
+            android:id="@+id/cognome"/>
+
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/littleMargin"
+            android:background="@color/buttonBackground"
+            android:text="@string/registrati"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:id="@+id/registrati"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/littleMargin"
+            android:background="@color/buttonBackground"
+            android:text="@string/already"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:id="@+id/already"/>
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
+</ScrollView>

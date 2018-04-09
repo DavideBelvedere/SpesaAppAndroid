@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">SpesaApp</string>
+
+
+
+    <string name="accedi">Accedi</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="registrati">Registrati</string>
+    <string name="titleRegistrati">Registrati a SpesaApp</string>
+    <string name="registrato">Non sei registrato?</string>
+
+
+    <string name="nome">Nome</string>
+    <string name="cognome">Cognome</string>
+    <string name="email">Email</string>
+    <string name="already">Ho già un account</string>
 </resources>
