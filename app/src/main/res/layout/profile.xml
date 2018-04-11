@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="@string/up"
+        android:textColor="@color/colorText"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="@string/down"
+
+        android:textSize="15dp" />
+
+         <ImageView
+            android:src="@drawable/img_profile"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+             android:gravity="center"
+             android:padding="50dp">
+         </ImageView>
+    <TextView
+        android:text="Nome utente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="15dp" >
+    </TextView>
+        <TextView
+            android:text="@string/name_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="20dp"
+            android:textColor="@color/colorText"
+            android:textStyle="bold" >
+        </TextView>
+
+    <TextView
+        android:text="email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="15dp">
+    </TextView>
+    <TextView
+        android:text="@string/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textSize="20dp"
+        android:textColor="@color/colorText"
+        android:textStyle="bold" >
+    </TextView>
+    </LinearLayout>
