@@ -6,11 +6,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "mydatabase.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     private static final String DATABASE_CREATE = "CREATE TABLE user (username VARCHAR(255) primary key, email VARCHAR(255), name VARCHAR(255), password VARCHAR(255), surname VARCHR(255), firstTime integer, imgProfile VARCHAR(255));";
     private static final String DATABASE_CREATE2 = "CREATE TABLE list (id_ integer primary key autoincrement, name VARCHAR(255),username_fk VARCHAR(255),FOREIGN KEY (username_fk) REFERENCES user(username));";
-    private static final String DATABASE_CREATE3 = "CREATE TABLE product (id_ integer primary key autoincrement, name VARCHAR(255));";
+    private static final String DATABASE_CREATE3 = "CREATE TABLE product (_id integer primary key autoincrement, name VARCHAR(255));";
     private static final String DATABASE_CREATE4 = "CREATE TABLE list_product (id_list_fk integer, id_product_fk integer, quantita integer,PRIMARY KEY(id_list_fk,id_product_fk) ,FOREIGN KEY (id_list_fk) REFERENCES list(id_),FOREIGN KEY (id_product_fk) REFERENCES product(id_));";
 
     // Costruttore

@@ -22,6 +22,13 @@ public class DBUtility {
 
     }
 
+    public static void initProductDB(Context context) {
+
+        MainSingleton.getInstance().setDBProductManager(new DBProductManager(context));
+        DBUtility.getDBProductManager().open();
+
+
+    }
     public static DBUserManager getDBUserManager() {
         return MainSingleton.getInstance().getDBUserManager();
     }
@@ -30,4 +37,7 @@ public class DBUtility {
         return MainSingleton.getInstance().getDBListManager();
     }
 
+    public static DBProductManager getDBProductManager() {
+        return MainSingleton.getInstance().getDBProductManager();
+    }
 }

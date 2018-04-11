@@ -64,8 +64,8 @@ public class UserListActivity extends AppCompatActivity {
                 new RecyclerAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(String item) {
-                        Toast toast = Toast.makeText(getApplicationContext(), item, Toast.LENGTH_SHORT);
-                        toast.show();
+                        Intent intent= new Intent(UserListActivity.this,ListDetailActivity.class);
+                        startActivity(intent);
                     }
                 }, new RecyclerAdapter.OnItemLongClickListener() {
             @Override
