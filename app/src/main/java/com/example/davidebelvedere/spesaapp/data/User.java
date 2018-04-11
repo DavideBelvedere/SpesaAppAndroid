@@ -34,6 +34,12 @@ public class User {
         return email;
     }
 
+    public String getImgProfile() {
+        return imgProfile;
+    }
+
+
+
     @Override
     public String toString() {
         return "User{" +
