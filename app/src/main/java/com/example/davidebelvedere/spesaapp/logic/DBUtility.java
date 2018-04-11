@@ -13,8 +13,18 @@ public class DBUtility {
 
     }
 
+    public static void initListDB(Context context) {
+
+        MainSingleton.getInstance().setDBListManager(new DBListManager(context));
+        DBUtility.getDBListManager().open();
+
+
+    }
     public static DBUserManager getDBUserManager() {
         return MainSingleton.getInstance().getDBUserManager();
     }
 
+    public static DBListManager getDBListManager() {
+        return MainSingleton.getInstance().getDBListManager();
+    }
 }

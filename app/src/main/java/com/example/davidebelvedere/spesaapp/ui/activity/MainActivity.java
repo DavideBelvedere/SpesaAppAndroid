@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.davidebelvedere.spesaapp.R;
 import com.example.davidebelvedere.spesaapp.logic.DBUserManager;
 import com.example.davidebelvedere.spesaapp.logic.DBUtility;
+import com.example.davidebelvedere.spesaapp.logic.DataAccessUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        DataAccessUtils.initDataSource(this);
         final EditText username = (EditText) findViewById(R.id.username);
         final EditText password = (EditText) findViewById(R.id.password);
         Button accedi = (Button) findViewById(R.id.accedi);
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "PASSWORD O USERNAME ERRATI", Toast.LENGTH_LONG).show();
                 } else {
                     result.moveToFirst();
+                    Intent intent = new Intent(MainActivity.this, UserListActivity.class);
+                    startActivity(intent);
                     Toast.makeText(getApplicationContext(), "" + result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_NAME)), Toast.LENGTH_LONG).show();
                 }
 

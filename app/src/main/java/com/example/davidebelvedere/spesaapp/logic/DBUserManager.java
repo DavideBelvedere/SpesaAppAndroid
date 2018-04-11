@@ -21,6 +21,8 @@ public class DBUserManager {
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PASSWORD = "password";
 
+    private static final String DATABASE_TABLE2 = "list";
+
     public DBUserManager(Context context) {
         this.context = context;
     }
@@ -45,6 +47,14 @@ public class DBUserManager {
 
         return values;
     }
+
+    private ContentValues createListContentValues(String name, String username_fk) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, name);
+        values.put(KEY_USERNAME, username_fk);
+        return values;
+    }
+
 
 
     public long createUser(String username, String email, String name, String surname, String password) {
@@ -71,5 +81,14 @@ public class DBUserManager {
 
     public Cursor isAlreadyRegistered(String username) {
         return database.query(DATABASE_TABLE, new String[]{KEY_USERNAME}, KEY_USERNAME + "=?", new String[]{username}, null, null, null);
+    }
+
+    public long addList(String name,String username_fk) {
+        ContentValues initialValues = createListContentValues(name, username_fk);
+        return database.insertOrThrow(DATABASE_TABLE2, null, initialValues);
+    }
+
+    public Cursor fetchAllLists() {
+        return database.query(DATABASE_TABLE2, new String[]{KEY_NAME, KEY_USERNAME}, null, null, null, null, null);
     }
 }

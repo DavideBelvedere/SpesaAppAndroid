@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.davidebelvedere.spesaapp.logic.DBUtility;
 import com.example.davidebelvedere.spesaapp.logic.DataAccessUtils;
 import com.example.davidebelvedere.spesaapp.R;
 import com.example.davidebelvedere.spesaapp.RecyclerAdapter;
@@ -109,6 +110,7 @@ public class UserListActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 DataAccessUtils.addItem(input.getText().toString());
+                DBUtility.getDBListManager().addList(input.getText().toString(),"d");
                 dialog.cancel();
             }
         });
