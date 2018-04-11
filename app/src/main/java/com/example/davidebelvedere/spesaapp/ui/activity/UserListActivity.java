@@ -45,8 +45,6 @@ public class UserListActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast toast= Toast.makeText(getApplicationContext(),"Funzia",Toast.LENGTH_SHORT);
-                toast.show();
                 finish();
             }
         });
@@ -92,8 +90,6 @@ public class UserListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        Intent intent = new Intent(this, UserListActivity.class);
-        startActivity(intent);
         if (id == R.id.action_settings) {
             return true;
         }

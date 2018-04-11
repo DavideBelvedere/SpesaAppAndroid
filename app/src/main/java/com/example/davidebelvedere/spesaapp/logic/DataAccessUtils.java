@@ -3,6 +3,7 @@ package com.example.davidebelvedere.spesaapp.logic;
 import android.content.Context;
 import android.database.Cursor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.davidebelvedere.spesaapp.data.MainSingleton;
@@ -14,7 +15,7 @@ import com.example.davidebelvedere.spesaapp.data.ProductList;
 
 public class DataAccessUtils {
     public static void initDataSource(Context context) {
-        List<ProductList> lista =MainSingleton.getInstance().getItemList();
+        List<ProductList> lista =new ArrayList<>();
 
         DBUtility.initListDB(context);
         Cursor result= DBUtility.getDBListManager().fetchAllLists();
