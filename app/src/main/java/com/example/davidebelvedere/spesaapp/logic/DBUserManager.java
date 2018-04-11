@@ -20,6 +20,8 @@ public class DBUserManager {
     public static final String KEY_SURNAME = "surname";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PASSWORD = "password";
+    public static final String KEY_ISFIRST = "firstTime";
+    public static final String KEY_IMGPROFILE = "imgProfile";
 
     public DBUserManager(Context context) {
         this.context = context;
@@ -35,25 +37,27 @@ public class DBUserManager {
         dbHelper.close();
     }
 
-    private ContentValues createContentValues(String username, String email, String name, String surname, String password) {
+    private ContentValues createContentValues(String username, String email, String name, String surname, String password, int firstTime, String imgProfile) {
         ContentValues values = new ContentValues();
         values.put(KEY_USERNAME, username);
         values.put(KEY_NAME, name);
         values.put(KEY_SURNAME, surname);
         values.put(KEY_EMAIL, email);
         values.put(KEY_PASSWORD, password);
+        values.put(KEY_ISFIRST, firstTime);
+        values.put(KEY_IMGPROFILE, imgProfile);
 
         return values;
     }
 
 
-    public long createUser(String username, String email, String name, String surname, String password) {
-        ContentValues initialValues = createContentValues(username, email, name, surname, password);
+    public long createUser(String username, String email, String name, String surname, String password, int firstTime, String imgProfile) {
+        ContentValues initialValues = createContentValues(username, email, name, surname, password, firstTime, imgProfile);
         return database.insertOrThrow(DATABASE_TABLE, null, initialValues);
     }
 
-    public boolean updateUser(String username, String email, String name, String surname, String password) {
-        ContentValues updateValues = createContentValues(username, email, name, surname, password);
+    public boolean updateUser(String username, String email, String name, String surname, String password, int firstTime, String imgProfile) {
+        ContentValues updateValues = createContentValues(username, email, name, surname, password, firstTime, imgProfile);
         return database.update(DATABASE_TABLE, updateValues, KEY_USERNAME + "=" + username, null) > 0;
     }
 
@@ -62,11 +66,11 @@ public class DBUserManager {
     }
 
     public Cursor fetchAllUser() {
-        return database.query(DATABASE_TABLE, new String[]{KEY_USERNAME, KEY_NAME, KEY_SURNAME, KEY_EMAIL}, null, null, null, null, null);
+        return database.query(DATABASE_TABLE, new String[]{KEY_USERNAME, KEY_NAME, KEY_SURNAME, KEY_EMAIL, KEY_IMGPROFILE, KEY_ISFIRST}, null, null, null, null, null);
     }
 
     public Cursor login(String username, String password) {
-        return database.query(DATABASE_TABLE, new String[]{KEY_USERNAME, KEY_NAME, KEY_SURNAME, KEY_EMAIL}, KEY_USERNAME + "=? AND " + KEY_PASSWORD + "=? ", new String[]{username, password}, null, null, null);
+        return database.query(DATABASE_TABLE, new String[]{KEY_USERNAME, KEY_NAME, KEY_SURNAME, KEY_EMAIL, KEY_IMGPROFILE, KEY_ISFIRST}, KEY_USERNAME + "=? AND " + KEY_PASSWORD + "=? ", new String[]{username, password}, null, null, null);
     }
 
     public Cursor isAlreadyRegistered(String username) {

@@ -44,10 +44,17 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         result.moveToFirst();
                         //Toast.makeText(getApplicationContext(), "" + result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_NAME)), Toast.LENGTH_LONG).show();
-                        User user = new User(result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_USERNAME)), result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_NAME)), result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_SURNAME)), result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_EMAIL)));
+                        User user = new User(result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_USERNAME)), result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_NAME)), result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_SURNAME)), result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_EMAIL)), result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_IMGPROFILE)));
                         SharedPreferenceUtility.writeLoggedUserOnSharedPref(getApplicationContext(), user);
                         SharedPreferenceUtility.saveCurrentUser(getApplicationContext());
-                        Toast.makeText(getApplicationContext(), MainSingleton.getCurrentUser().toString(), Toast.LENGTH_LONG).show();
+                        Intent intent = null;
+                        if ((result.getInt(result.getColumnIndexOrThrow(DBUserManager.KEY_USERNAME))) == 0) {
+                            // intent = new Intent(MainActivity.this, TutorialActivity.class);
+
+                        } else {
+                            // intent = new Intent(MainActivity.this, UserListActivity.class);
+                        }
+                        startActivity(intent);
                     }
 
 
