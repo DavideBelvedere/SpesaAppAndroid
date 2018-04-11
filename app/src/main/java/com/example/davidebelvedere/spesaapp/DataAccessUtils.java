@@ -2,7 +2,6 @@ package com.example.davidebelvedere.spesaapp;
 
 import android.content.Context;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

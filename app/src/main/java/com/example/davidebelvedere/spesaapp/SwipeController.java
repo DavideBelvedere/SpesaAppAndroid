@@ -5,19 +5,6 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.text.InputType;
-import android.util.Log;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import java.nio.file.attribute.UserPrincipal;
-
-import static android.support.v7.widget.helper.ItemTouchHelper.DOWN;
-import static android.support.v7.widget.helper.ItemTouchHelper.UP;
-import static android.view.Gravity.END;
-import static android.view.Gravity.LEFT;
-import static android.view.Gravity.RIGHT;
-import static android.view.Gravity.START;
 import android.support.v7.widget.helper.ItemTouchHelper.Callback;
 
 /**
