@@ -15,4 +15,9 @@
     <string name="cognome">Cognome</string>
     <string name="email">Email</string>
     <string name="already">Ho già un account</string>
+
+
+    <string name="alert_ok">OK</string>
+    <string name="alert_cancel">CANCEL</string>
+
 </resources>

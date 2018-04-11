@@ -16,6 +16,7 @@ import com.example.davidebelvedere.spesaapp.data.MainSingleton;
 import com.example.davidebelvedere.spesaapp.data.User;
 import com.example.davidebelvedere.spesaapp.logic.DBUserManager;
 import com.example.davidebelvedere.spesaapp.logic.DBUtility;
+import com.example.davidebelvedere.spesaapp.logic.DataAccessUtils;
 import com.example.davidebelvedere.spesaapp.logic.SharedPreferenceUtility;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,11 +24,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DataAccessUtils.initDataSource(this);
         if (SharedPreferenceUtility.isUserValid(getApplicationContext())) {
             SharedPreferenceUtility.saveCurrentUser(getApplicationContext());
             Toast.makeText(getApplicationContext(), MainSingleton.getCurrentUser().toString(), Toast.LENGTH_LONG).show();
         } else {
             setContentView(R.layout.activity_main);
+
             final EditText username = (EditText) findViewById(R.id.username);
             final EditText password = (EditText) findViewById(R.id.password);
             Button accedi = (Button) findViewById(R.id.accedi);
@@ -49,10 +52,10 @@ public class MainActivity extends AppCompatActivity {
                         SharedPreferenceUtility.saveCurrentUser(getApplicationContext());
                         Intent intent = null;
                         if ((result.getInt(result.getColumnIndexOrThrow(DBUserManager.KEY_USERNAME))) == 0) {
-                            // intent = new Intent(MainActivity.this, TutorialActivity.class);
+                            intent = new Intent(MainActivity.this, UserListActivity.class);
 
                         } else {
-                            // intent = new Intent(MainActivity.this, UserListActivity.class);
+                             intent = new Intent(MainActivity.this, UserListActivity.class);
                         }
                         startActivity(intent);
                     }
