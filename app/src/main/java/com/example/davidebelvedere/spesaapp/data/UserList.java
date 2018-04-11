@@ -1,4 +1,4 @@
-package com.example.davidebelvedere.spesaapp;
+package com.example.davidebelvedere.spesaapp.data;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import java.util.List;
  * Created by corsista on 09/04/2018.
  */
 
-class UserList {
+public class UserList {
     private String name;
     private List<String> prodotto;
 

@@ -1,4 +1,4 @@
-package com.example.davidebelvedere.spesaapp;
+package com.example.davidebelvedere.spesaapp.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +16,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.davidebelvedere.spesaapp.logic.DataAccessUtils;
+import com.example.davidebelvedere.spesaapp.R;
+import com.example.davidebelvedere.spesaapp.RecyclerAdapter;
+import com.example.davidebelvedere.spesaapp.SwipeController;
 
 /**
  * Created by corsista on 09/04/2018.

@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.davidebelvedere.spesaapp.data.UserList;
+
 import java.util.List;
 
 /**

@@ -1,4 +1,4 @@
-package com.example.davidebelvedere.spesaapp;
+package com.example.davidebelvedere.spesaapp.data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,12 +7,12 @@ import java.util.List;
  * Created by corsista on 09/04/2018.
  */
 
-class DataContainerSingleton {
+public class DataContainerSingleton {
     private static final DataContainerSingleton ourInstance = new DataContainerSingleton();
 
 
     private List<UserList> itemList;
-    static DataContainerSingleton getInstance() {
+    public static DataContainerSingleton getInstance() {
         return ourInstance;
     }
 

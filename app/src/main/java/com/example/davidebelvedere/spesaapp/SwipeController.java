@@ -7,11 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.support.v7.widget.helper.ItemTouchHelper.Callback;
 
+import com.example.davidebelvedere.spesaapp.logic.DataAccessUtils;
+
 /**
  * Created by corsista on 09/04/2018.
  */
 
-class SwipeController extends Callback {
+public class SwipeController extends Callback {
 
     private Context context;
 

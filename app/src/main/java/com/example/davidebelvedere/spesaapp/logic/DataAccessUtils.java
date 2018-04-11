@@ -1,8 +1,11 @@
-package com.example.davidebelvedere.spesaapp;
+package com.example.davidebelvedere.spesaapp.logic;
 
 import android.content.Context;
 
 import java.util.List;
+
+import com.example.davidebelvedere.spesaapp.data.DataContainerSingleton;
+import com.example.davidebelvedere.spesaapp.data.UserList;
 
 /**
  * Created by corsista on 09/04/2018.
@@ -10,7 +13,7 @@ import java.util.List;
 
 public class DataAccessUtils {
     public static void initDataSource(Context context) {
-        List<UserList> lista =DataContainerSingleton.getInstance().getItemList();
+        List<UserList> lista = DataContainerSingleton.getInstance().getItemList();
         lista.add(new UserList("Daily shopz"));
         lista.add(new UserList("Weekly shopz"));
         lista.add(new UserList("Monthly shopz"));
