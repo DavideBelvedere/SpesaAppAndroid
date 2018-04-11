@@ -1,4 +1,4 @@
-package com.example.davidebelvedere.spesaapp;
+package com.example.davidebelvedere.spesaapp.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,7 +8,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.davidebelvedere.spesaapp.data.UserList;
+import com.example.davidebelvedere.spesaapp.R;
+import com.example.davidebelvedere.spesaapp.data.ProductList;
 
 import java.util.List;
 
@@ -24,11 +25,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         void onItemLongClick(String item);
     }
 
-    private List<UserList> dataSet;
+    private List<ProductList> dataSet;
     private final OnItemClickListener listener;
     private final OnItemLongClickListener longClickListener;
 
-    public RecyclerAdapter(List<UserList> dataSet, OnItemClickListener listener, OnItemLongClickListener longClickListener) {
+    public RecyclerAdapter(List<ProductList> dataSet, OnItemClickListener listener, OnItemLongClickListener longClickListener) {
         this.dataSet = dataSet;
         this.listener = listener;
         this.longClickListener = longClickListener;

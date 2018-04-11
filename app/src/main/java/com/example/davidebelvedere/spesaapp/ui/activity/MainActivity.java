@@ -24,10 +24,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DataAccessUtils.initDataSource(this);
+
         if (SharedPreferenceUtility.isUserValid(getApplicationContext())) {
             SharedPreferenceUtility.saveCurrentUser(getApplicationContext());
-            Toast.makeText(getApplicationContext(), MainSingleton.getCurrentUser().toString(), Toast.LENGTH_LONG).show();
+            Intent intent = null;
+            intent = new Intent(MainActivity.this, UserListActivity.class);
+            startActivity(intent);
+
+            //Toast.makeText(getApplicationContext(), MainSingleton.getCurrentUser().toString(), Toast.LENGTH_LONG).show();
         } else {
             setContentView(R.layout.activity_main);
 
@@ -71,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
     }
 
     @Override

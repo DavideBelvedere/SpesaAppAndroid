@@ -17,10 +17,11 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.davidebelvedere.spesaapp.data.MainSingleton;
 import com.example.davidebelvedere.spesaapp.logic.DBUtility;
 import com.example.davidebelvedere.spesaapp.logic.DataAccessUtils;
 import com.example.davidebelvedere.spesaapp.R;
-import com.example.davidebelvedere.spesaapp.RecyclerAdapter;
+import com.example.davidebelvedere.spesaapp.ui.adapter.RecyclerAdapter;
 import com.example.davidebelvedere.spesaapp.SwipeController;
 
 /**
@@ -33,8 +34,10 @@ public class UserListActivity extends AppCompatActivity {
     RecyclerAdapter recyclerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        DataAccessUtils.initDataSource(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_list_layout);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
 
         setSupportActionBar(toolbar);
@@ -109,9 +112,10 @@ public class UserListActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                DataAccessUtils.addItem(input.getText().toString());
-                DBUtility.getDBListManager().addList(input.getText().toString(),"d");
+               int pos= DataAccessUtils.addItem(input.getText().toString());
+                DBUtility.getDBListManager().addList(input.getText().toString(), MainSingleton.getCurrentUser().getUsername());
                 dialog.cancel();
+                recyclerAdapter.notifyItemInserted(pos);
             }
         });
         builder.setNegativeButton(R.string.alert_cancel, new DialogInterface.OnClickListener() {

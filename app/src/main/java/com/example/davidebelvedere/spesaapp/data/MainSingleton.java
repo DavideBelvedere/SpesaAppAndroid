@@ -1,7 +1,6 @@
 package com.example.davidebelvedere.spesaapp.data;
 
 
-
 import com.example.davidebelvedere.spesaapp.logic.DBListManager;
 import com.example.davidebelvedere.spesaapp.logic.DBUserManager;
 
@@ -11,12 +10,12 @@ import java.util.List;
 public class MainSingleton {
     private static DBUserManager dbUserManager;
     private static User currentUser;
-    private List<UserList> itemList;
+    private List<ProductList> itemList;
     private static DBListManager dbListManager;
     private static MainSingleton mySingleton = new MainSingleton();
 
     private MainSingleton() {
-
+        itemList = new ArrayList<>();
     }
 
     public static MainSingleton getInstance() {
@@ -39,6 +38,7 @@ public class MainSingleton {
     public DBListManager getDBListManager() {
         return dbListManager;
     }
+
     public void setDBUserManager(DBUserManager dbManager) {
         MainSingleton.dbUserManager = dbManager;
     }
@@ -47,11 +47,11 @@ public class MainSingleton {
         MainSingleton.dbListManager = dbManager;
     }
 
-    public void addItemList(List<UserList> itemList) {
+    public void addItemList(List<ProductList> itemList) {
         this.itemList = itemList;
     }
 
-    public List<UserList> getItemList() {
+    public List<ProductList> getItemList() {
         return this.itemList;
     }
 

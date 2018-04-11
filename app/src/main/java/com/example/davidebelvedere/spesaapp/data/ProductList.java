@@ -6,11 +6,11 @@ import java.util.List;
  * Created by corsista on 09/04/2018.
  */
 
-public class UserList {
+public class ProductList {
     private String name;
     private List<String> prodotto;
 
-    public UserList(String name) {
+    public ProductList(String name) {
         this.name = name;
     }
 

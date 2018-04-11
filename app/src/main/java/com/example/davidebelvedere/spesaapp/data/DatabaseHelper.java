@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "mydatabase.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String DATABASE_CREATE = "CREATE TABLE user (username VARCHAR(255) primary key, email VARCHAR(255), name VARCHAR(255), password VARCHAR(255), surname VARCHR(255), firstTime integer, imgProfile VARCHAR(255));";
     private static final String DATABASE_CREATE2 = "CREATE TABLE list (id_ integer primary key autoincrement, name VARCHAR(255),username_fk VARCHAR(255),FOREIGN KEY (username_fk) REFERENCES user(username));";

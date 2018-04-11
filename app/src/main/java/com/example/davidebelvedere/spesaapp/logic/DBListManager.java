@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.davidebelvedere.spesaapp.data.DatabaseHelper;
+import com.example.davidebelvedere.spesaapp.data.MainSingleton;
 
 public class DBListManager {
     private SQLiteDatabase database;
@@ -44,6 +45,6 @@ public class DBListManager {
     }
 
     public Cursor fetchAllLists() {
-        return database.query(DATABASE_TABLE, new String[]{KEY_NAME, KEY_USERNAME}, KEY_USERNAME + "=?", new String[]{"a"}, null, null, null);
+        return database.query(DATABASE_TABLE, new String[]{KEY_NAME, KEY_USERNAME}, KEY_USERNAME + "=?", new String[]{MainSingleton.getCurrentUser().getUsername()}, null, null, null);
     }
 }
