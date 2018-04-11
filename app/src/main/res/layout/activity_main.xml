@@ -1,9 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    tools:context=".ui.activity.MainActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/marginTopLogoLogin"
+        android:src="@drawable/faispesa_txt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:text="@string/accedi"
+
+        android:textSize="@dimen/loginTitle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/marginLinearLogin"
+        android:layout_marginStart="@dimen/marginLinearLogin"
+        android:layout_marginTop="@dimen/linearLoginMarginTop"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/username"
+            android:textSize="@dimen/loginTextView"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/username"
+            android:textSize="@dimen/loginTextView"
+            android:id="@+id/username"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/linearLoginMarginTop"
+            android:text="@string/password"
+            android:textSize="@dimen/loginTextView"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:textSize="@dimen/loginTextView"
+            android:id="@+id/password"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/linearLoginMarginTop"
+            android:background="@color/buttonBackground"
+            android:text="@string/accedi"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:id="@+id/accedi"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/linearLoginMarginTop"
+            android:text="@string/registrato"
+            android:textSize="@dimen/loginTextView" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/linearLoginMarginTop"
+            android:text="@string/registrati"
+            android:textColor="@color/buttonBackground"
+            android:textSize="@dimen/registrati"
+            android:background="@color/transparent"
+            android:id="@+id/registrati"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>
