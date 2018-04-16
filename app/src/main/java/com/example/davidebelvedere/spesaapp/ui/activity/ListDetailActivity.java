@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import com.example.davidebelvedere.spesaapp.data.MainSingleton;
@@ -91,7 +92,7 @@ class ListDetailActivity extends AppCompatActivity {
 
                 DBUtility.getDBListProductManager().addListProduct(listId, id, 2);
 
-                customAdapter.changeCursor(MainSingleton.getInstance().getDBListProductManager().fetchAllProducts(listId));
+                customAdapter.changeCursor(DBUtility.getDBListProductManager().fetchAllProducts(listId));
                 customAdapter.notifyDataSetChanged();
 
                 dialog.cancel();

@@ -2,6 +2,7 @@ package com.example.davidebelvedere.spesaapp;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Canvas;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -29,7 +30,14 @@ public class SwipeController extends Callback {
 
     @Override
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+
         return false;
+    }
+
+    @Override
+    public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+        float translationX = Math.min(-dX, viewHolder.itemView.getWidth() / 6);
+        viewHolder.itemView.setTranslationX(-translationX);
     }
 
     @Override
@@ -52,8 +60,10 @@ public class SwipeController extends Callback {
         builder.setNegativeButton(R.string.alert_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                DataAccessUtils.removeItem(viewHolder.getPosition());
+               // DataAccessUtils.removeItem(viewHolder.getPosition());
                 dialog.cancel();
+                viewHolder.itemView.setTranslationX(0);
+
             }
         });
         builder.show();
