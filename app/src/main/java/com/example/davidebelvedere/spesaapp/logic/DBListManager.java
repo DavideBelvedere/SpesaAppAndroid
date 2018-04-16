@@ -14,6 +14,7 @@ public class DBListManager {
     private DatabaseHelper dbHelper;
     private Context context;
 
+    public static final String KEY_ID="_id";
     public static final String KEY_USERNAME = "username_fk";
     public static final String KEY_NAME = "name";
     private static final String DATABASE_TABLE = "list";
@@ -45,6 +46,10 @@ public class DBListManager {
     }
 
     public Cursor fetchAllLists() {
-        return database.query(DATABASE_TABLE, new String[]{KEY_NAME, KEY_USERNAME}, KEY_USERNAME + "=?", new String[]{MainSingleton.getCurrentUser().getUsername()}, null, null, null);
+        return database.query(DATABASE_TABLE,null, KEY_USERNAME + "=?", new String[]{MainSingleton.getCurrentUser().getUsername()}, null, null, null);
+    }
+
+    public Cursor fetchListByName(String nome) {
+        return database.query(DATABASE_TABLE, new String[]{KEY_ID}, KEY_NAME + "=?", new String[]{nome}, null, null, null);
     }
 }

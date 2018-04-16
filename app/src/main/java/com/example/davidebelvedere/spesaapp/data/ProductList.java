@@ -7,10 +7,11 @@ import java.util.List;
  */
 
 public class ProductList {
+    private int id;
     private String name;
     private List<String> prodotto;
 
-    public ProductList(String name) {
+    public ProductList(String name,int id) {
         this.name = name;
     }
 
@@ -20,5 +21,13 @@ public class ProductList {
 
     public String getName() {
         return name;
+    }
+
+    public void setId(int id){
+        this.id=id;
+    }
+
+    public int getId() {
+        return id;
     }
 }

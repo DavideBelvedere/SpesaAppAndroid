@@ -19,7 +19,7 @@ import com.example.davidebelvedere.spesaapp.R;
 import com.example.davidebelvedere.spesaapp.data.MainSingleton;
 import com.example.davidebelvedere.spesaapp.logic.DBUtility;
 import com.example.davidebelvedere.spesaapp.logic.DataAccessUtils;
-import com.example.davidebelvedere.spesaapp.ui.adapter.MyCursorAdapter;
+import com.example.davidebelvedere.spesaapp.ui.adapter.MyCursorAdapter2;
 
 /**
  * Created by corsista on 11/04/2018.
@@ -27,13 +27,16 @@ import com.example.davidebelvedere.spesaapp.ui.adapter.MyCursorAdapter;
 
 class ListDetailActivity extends AppCompatActivity {
 
-    private MyCursorAdapter customAdapter;
+    private MyCursorAdapter2 customAdapter;
+    private ListView lista;
+    private int listId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_detail_layout);
         DataAccessUtils.initDataSourceProduct(this);
-
+        Bundle bundle= getIntent().getExtras();
+        listId=bundle.getInt("idLista");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
 
         setSupportActionBar(toolbar);
@@ -53,17 +56,18 @@ class ListDetailActivity extends AppCompatActivity {
             }
         });
 
-        DBUtility.initProductDB(this);
-        DBUtility.getDBProductManager().addListProduct("ciao");
-        Cursor result = MainSingleton.getInstance().getDBProductManager().fetchAllProducts();
+        DBUtility.initListProductDB(this);
+        Cursor result = DBUtility.getDBListProductManager().fetchAllProducts(listId);
+        customAdapter = new MyCursorAdapter2(this,result);
 
-        customAdapter = new MyCursorAdapter(this,result);
+        lista= findViewById(R.id.listView);
+        lista.setAdapter(customAdapter);
     }
 
     public void showAddProductAlertDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Add list");
+        builder.setTitle("Add product");
 
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -71,15 +75,26 @@ class ListDetailActivity extends AppCompatActivity {
         builder.setPositiveButton(R.string.alert_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                int pos= DataAccessUtils.addItem(input.getText().toString());
+                DBUtility.initProductDB(getApplicationContext());
                 DBUtility.getDBProductManager().addListProduct(input.getText().toString());
+
+                DataAccessUtils.addItemProduct(input.getText().toString());
+                Cursor result3= DBUtility.getDBProductManager().fetchProductByName(input.getText().toString());
+                result3.moveToFirst();
+                DBUtility.getDBListProductManager().addListProduct(listId,result3.getInt(0),2);
+                Cursor result = DBUtility.getDBProductManager().fetchAllProducts();
+                customAdapter = new MyCursorAdapter2(getApplicationContext(),result);
+                lista.setAdapter(customAdapter);
                 dialog.cancel();
-                customAdapter.notifyDataSetChanged();
             }
         });
         builder.setNegativeButton(R.string.alert_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                DBUtility.getDBProductManager().removeAll();
+                Cursor result = DBUtility.getDBProductManager().fetchAllProducts();
+                customAdapter = new MyCursorAdapter2(getApplicationContext(),result);
+                lista.setAdapter(customAdapter);
                 dialog.cancel();
             }
         });

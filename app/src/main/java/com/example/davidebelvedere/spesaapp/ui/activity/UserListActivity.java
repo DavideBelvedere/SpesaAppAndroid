@@ -32,6 +32,7 @@ public class UserListActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     RecyclerAdapter recyclerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         DataAccessUtils.initDataSource(this);
@@ -57,20 +58,21 @@ public class UserListActivity extends AppCompatActivity {
             }
         });
 
-        recyclerView= findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerAdapter = new RecyclerAdapter(DataAccessUtils.getDataSourceItemList(this),
                 new RecyclerAdapter.OnItemClickListener() {
                     @Override
-                    public void onItemClick(String item) {
-                        Intent intent= new Intent(UserListActivity.this,ListDetailActivity.class);
+                    public void onItemClick(int item) {
+                        Intent intent = new Intent(UserListActivity.this, ListDetailActivity.class);
+                        intent.putExtra("idLista", item);
                         startActivity(intent);
                     }
                 }, new RecyclerAdapter.OnItemLongClickListener() {
             @Override
-            public void onItemLongClick(String item) {
-                Toast toast = Toast.makeText(getApplicationContext(), item+" allungato", Toast.LENGTH_SHORT);
+            public void onItemLongClick(int item) {
+                Toast toast = Toast.makeText(getApplicationContext(), item + " allungato", Toast.LENGTH_SHORT);
                 toast.show();
             }
         });
@@ -96,6 +98,7 @@ public class UserListActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
     public void showAddListAlertDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -108,8 +111,10 @@ public class UserListActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-               int pos= DataAccessUtils.addItem(input.getText().toString());
-                DBUtility.getDBListManager().addList(input.getText().toString(), MainSingleton.getCurrentUser().getUsername());
+            /*   int pos= DataAccessUtils.addItem(input.getText().toString());
+                DBUtility.getDBListManager().addList(input.getText().toString(), MainSingleton.getCurrentUser().getUsername());*/
+                int id = (int) DBUtility.getDBListManager().addList(input.getText().toString(), MainSingleton.getCurrentUser().getUsername());
+                int pos = DataAccessUtils.addItem(input.getText().toString(), id);
                 dialog.cancel();
                 recyclerAdapter.notifyItemInserted(pos);
             }

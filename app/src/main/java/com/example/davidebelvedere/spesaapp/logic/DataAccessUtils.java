@@ -23,7 +23,7 @@ public class DataAccessUtils {
         if (result == null || result.getCount() == 0) {
         } else {
             while (result.moveToNext()){
-                lista.add(new ProductList(result.getString(result.getColumnIndexOrThrow(DBListManager.KEY_NAME))));
+                lista.add(new ProductList(result.getString(result.getColumnIndexOrThrow(DBListManager.KEY_NAME)),result.getInt(result.getColumnIndexOrThrow(DBListManager.KEY_ID))));
             }
             result.close();
         }
@@ -34,9 +34,9 @@ public class DataAccessUtils {
         return MainSingleton.getInstance().getItemList();
     }
 
-    public static int addItem(String item){
+    public static int addItem(String item,int id){
         List<ProductList> lista = MainSingleton.getInstance().getItemList();
-        lista.add(new ProductList(item));
+        lista.add(new ProductList(item,id));
         MainSingleton.getInstance().addItemList(lista);
         return (lista.size()-1);
     }
@@ -49,8 +49,8 @@ public class DataAccessUtils {
     public static void initDataSourceProduct(Context context) {
         List<String> lista =new ArrayList<>();
 
-        DBUtility.initListDB(context);
-        Cursor result= DBUtility.getDBListManager().fetchAllLists();
+        DBUtility.initProductDB(context);
+        Cursor result= DBUtility.getDBProductManager().fetchAllProducts();
 
         if (result == null || result.getCount() == 0) {
         } else {
@@ -61,6 +61,10 @@ public class DataAccessUtils {
         }
         MainSingleton.getInstance().addItemProductList(lista);
 
+    }
+
+    public static List<String> getDataSourceProductList(Context context){
+        return MainSingleton.getInstance().getItemProductList();
     }
 
     public static int addItemProduct(String item){

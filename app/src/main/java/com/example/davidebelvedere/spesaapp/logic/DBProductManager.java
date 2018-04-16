@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.davidebelvedere.spesaapp.data.DatabaseHelper;
 
 public class DBProductManager {
+    private static final String KEY_ID = "_id";
     private SQLiteDatabase database;
     private DatabaseHelper dbHelper;
     private Context context;
@@ -42,6 +43,19 @@ public class DBProductManager {
     }
 
     public Cursor fetchAllProducts() {
-        return database.query(DATABASE_TABLE, new String[]{KEY_NAME}, null, null, null, null, null);
+        return database.query(DATABASE_TABLE, null, null, null, null, null, null);
+    }
+
+    public void removeAll(){
+        database.delete(DATABASE_TABLE,null,null);
+    }
+
+    public Cursor fetchProductByName(String nome) {
+        return database.query(DATABASE_TABLE, new String[]{KEY_ID}, KEY_NAME + "=?", new String[]{nome}, null, null, null);
+    }
+
+    public Cursor fetchProductById(String id) {
+        return database.query(DATABASE_TABLE, new String[]{KEY_NAME}, KEY_ID + "=?",new String[]{id}, null, null, null);
+
     }
 }

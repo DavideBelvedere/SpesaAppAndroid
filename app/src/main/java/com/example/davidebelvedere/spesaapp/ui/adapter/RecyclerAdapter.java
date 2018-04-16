@@ -19,10 +19,10 @@ import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     public interface OnItemClickListener {
-        void onItemClick(String item);
+        void onItemClick(int item);
     }
     public interface OnItemLongClickListener{
-        void onItemLongClick(String item);
+        void onItemLongClick(int item);
     }
 
     private List<ProductList> dataSet;
@@ -41,16 +41,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         public ViewHolder(View itemView) {
             super(itemView);
         }
-        public void bind(final String item, final OnItemClickListener listener,final OnItemLongClickListener longClickListener) {
+        public void bind(final int itemId, final OnItemClickListener listener, final OnItemLongClickListener longClickListener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
-                    listener.onItemClick(item);
+                    listener.onItemClick(itemId);
                 }
             });
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    longClickListener.onItemLongClick(item);
+                    longClickListener.onItemLongClick(itemId);
                     return true;
                 }
             });
@@ -67,7 +67,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bind(dataSet.get(position).getName(),listener,longClickListener);
+        holder.bind(dataSet.get(position).getId(),listener,longClickListener);
         ImageView imageView = holder.itemView.findViewById(R.id.imageView);
         imageView.setImageResource(R.drawable.ic_launcher_foreground);
         TextView textView = holder.itemView.findViewById(R.id.textView);
