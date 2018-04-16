@@ -38,11 +38,10 @@ public class UserListActivity extends AppCompatActivity {
         DataAccessUtils.initDataSource(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_list_layout);
-        Toast.makeText(getApplicationContext(), MainSingleton.getCurrentUser().getImgProfile(), Toast.LENGTH_LONG).show();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
 
         setSupportActionBar(toolbar);
-        /*getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,7 +49,7 @@ public class UserListActivity extends AppCompatActivity {
                 toast.show();
                 finish();
             }
-        });*/
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +92,7 @@ public class UserListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        Intent intent = new Intent(this, UserListActivity.class);
+        Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
         if (id == R.id.action_settings) {
             return true;

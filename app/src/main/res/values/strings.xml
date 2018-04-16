@@ -22,6 +22,7 @@
 
     <string name="name_profile">Mario Rossi</string>
 
-    <string name="up">Benvenuto Mario Rossi</string>
-    <string name="down"><a href="modifica.xml">Modifica le impostazioni di base del tuo account</a></string>
+
+    <string name="profileSubtitle">Ecco i dati del tuo account</string>
+
 </resources>

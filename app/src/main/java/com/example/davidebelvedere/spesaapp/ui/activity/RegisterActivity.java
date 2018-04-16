@@ -49,8 +49,6 @@ public class RegisterActivity extends Activity {
                 Cursor result = DBUtility.getDBUserManager().isAlreadyRegistered(String.valueOf(username.getText()));
                 if (result == null || result.getCount() == 0) {
                     DBUtility.getDBUserManager().createUser(String.valueOf(username.getText()), String.valueOf(email.getText()), String.valueOf(name.getText()), String.valueOf(surname.getText()), String.valueOf(password.getText()), 0, imgUri);
-
-
                     finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "USERNAME GIA' ESISTENTE INSERISCINE UN'ALTRO", Toast.LENGTH_LONG).show();
@@ -119,6 +117,7 @@ public class RegisterActivity extends Activity {
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
                 Uri photoUri = data.getData();
+                Log.d("uri", ""+photoUri);
                 String currentPhotoPath = photoUri.getPath();
                 imgProfile.setImageURI(photoUri);
                 imgUri = DBUtility.getStringFromUri(photoUri);

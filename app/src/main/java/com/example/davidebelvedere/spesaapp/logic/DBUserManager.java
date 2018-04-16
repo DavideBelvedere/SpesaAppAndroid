@@ -65,6 +65,10 @@ public class DBUserManager {
         return database.delete(DATABASE_TABLE, KEY_USERNAME + "=" + username, null) > 0;
     }
 
+    public Cursor getUser(String username) {
+        return database.query(DATABASE_TABLE,new String[]{KEY_USERNAME, KEY_NAME, KEY_SURNAME, KEY_EMAIL, KEY_IMGPROFILE},KEY_USERNAME + "=?", new String[]{username},null,null,null);
+    }
+
     public Cursor fetchAllUser() {
         return database.query(DATABASE_TABLE, new String[]{KEY_USERNAME, KEY_NAME, KEY_SURNAME, KEY_EMAIL, KEY_IMGPROFILE, KEY_ISFIRST}, null, null, null, null, null);
     }

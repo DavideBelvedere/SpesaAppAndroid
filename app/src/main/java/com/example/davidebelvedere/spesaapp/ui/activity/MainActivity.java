@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (SharedPreferenceUtility.isUserValid(getApplicationContext())) {
+        boolean isUserValid = SharedPreferenceUtility.isUserValid(getApplicationContext());
+        if (isUserValid) {
             SharedPreferenceUtility.saveCurrentUser(getApplicationContext());
             Intent intent = null;
             intent = new Intent(MainActivity.this, UserListActivity.class);
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                             intent = new Intent(MainActivity.this, UserListActivity.class);
 
                         } else {
-                             intent = new Intent(MainActivity.this, UserListActivity.class);
+                            intent = new Intent(MainActivity.this, UserListActivity.class);
                         }
                         startActivity(intent);
                     }
