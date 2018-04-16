@@ -13,6 +13,7 @@ public class ProductList {
 
     public ProductList(String name,int id) {
         this.name = name;
+        this.id=id;
     }
 
     public void addElement(String element){
