@@ -13,12 +13,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.example.davidebelvedere.spesaapp.R;
+
 import com.example.davidebelvedere.spesaapp.data.MainSingleton;
+import com.example.davidebelvedere.spesaapp.logic.DBProductManager;
 import com.example.davidebelvedere.spesaapp.logic.DBUtility;
-import com.example.davidebelvedere.spesaapp.logic.DataAccessUtils;
+import com.example.davidebelvedere.spesaapp.R;
 import com.example.davidebelvedere.spesaapp.ui.adapter.MyCursorAdapter2;
 
 /**
@@ -30,13 +30,13 @@ class ListDetailActivity extends AppCompatActivity {
     private MyCursorAdapter2 customAdapter;
     private ListView lista;
     private int listId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_detail_layout);
-        DataAccessUtils.initDataSourceProduct(this);
-        Bundle bundle= getIntent().getExtras();
-        listId=bundle.getInt("idLista");
+        Bundle bundle = getIntent().getExtras();
+        listId = bundle.getInt("idLista");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
 
         setSupportActionBar(toolbar);
@@ -57,10 +57,12 @@ class ListDetailActivity extends AppCompatActivity {
         });
 
         DBUtility.initListProductDB(this);
-        Cursor result = DBUtility.getDBListProductManager().fetchAllProducts(listId);
-        customAdapter = new MyCursorAdapter2(this,result);
+        DBUtility.initProductDB(this);
 
-        lista= findViewById(R.id.listView);
+        Cursor result = DBUtility.getDBListProductManager().fetchAllProducts(listId);
+        customAdapter = new MyCursorAdapter2(this, result);
+
+        lista = findViewById(R.id.listView);
         lista.setAdapter(customAdapter);
     }
 
@@ -75,16 +77,23 @@ class ListDetailActivity extends AppCompatActivity {
         builder.setPositiveButton(R.string.alert_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                DBUtility.initProductDB(getApplicationContext());
-                DBUtility.getDBProductManager().addListProduct(input.getText().toString());
 
-                DataAccessUtils.addItemProduct(input.getText().toString());
-                Cursor result3= DBUtility.getDBProductManager().fetchProductByName(input.getText().toString());
-                result3.moveToFirst();
-                DBUtility.getDBListProductManager().addListProduct(listId,result3.getInt(0),2);
-                Cursor result = DBUtility.getDBProductManager().fetchAllProducts();
-                customAdapter = new MyCursorAdapter2(getApplicationContext(),result);
-                lista.setAdapter(customAdapter);
+
+                Cursor result3 = DBUtility.getDBProductManager().fetchProductByName(input.getText().toString());
+                int id;
+                if (!result3.moveToFirst()) {
+                    id = (int) DBUtility.getDBProductManager().addListProduct(input.getText().toString());
+                } else {
+                    id = result3.getInt(result3.getColumnIndexOrThrow(DBProductManager.KEY_ID));
+                }
+                result3.close();
+
+
+                DBUtility.getDBListProductManager().addListProduct(listId, id, 2);
+
+                customAdapter.changeCursor(MainSingleton.getInstance().getDBListProductManager().fetchAllProducts(listId));
+                customAdapter.notifyDataSetChanged();
+
                 dialog.cancel();
             }
         });
@@ -93,13 +102,14 @@ class ListDetailActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 DBUtility.getDBProductManager().removeAll();
                 Cursor result = DBUtility.getDBProductManager().fetchAllProducts();
-                customAdapter = new MyCursorAdapter2(getApplicationContext(),result);
+                customAdapter = new MyCursorAdapter2(getApplicationContext(), result);
                 lista.setAdapter(customAdapter);
                 dialog.cancel();
             }
         });
         builder.show();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_layout, menu);
@@ -115,5 +125,12 @@ class ListDetailActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DBUtility.getDBProductManager().close();
+        DBUtility.getDBListProductManager().close();
     }
 }

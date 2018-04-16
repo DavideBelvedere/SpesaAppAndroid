@@ -127,4 +127,9 @@ public class UserListActivity extends AppCompatActivity {
         });
         builder.show();
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DBUtility.getDBUserManager().close();
+    }
 }

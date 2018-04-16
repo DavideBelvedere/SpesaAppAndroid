@@ -26,13 +26,12 @@ public class MyCursorAdapter2 extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         // Find fields to populate in inflated template
         ImageView imageView= (ImageView) view.findViewById(R.id.imageView);
-        imageView.setImageResource(R.drawable.ic_launcher_foreground);
         TextView name = (TextView) view.findViewById(R.id.textView);
+        imageView.setImageResource(R.drawable.ic_launcher_foreground);
+
 
         Cursor result= DBUtility.getDBProductManager().fetchProductById(cursor.getString(cursor.getColumnIndexOrThrow(DBListProductManager.KEY_ID_PRODUCT)));
         result.moveToFirst();
-        result.getString(0);
-
         name.setText(result.getString(0));
 
     }

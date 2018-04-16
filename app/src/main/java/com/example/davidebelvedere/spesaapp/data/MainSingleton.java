@@ -71,6 +71,7 @@ public class MainSingleton {
     public DBProductManager getDBProductManager() {
         return dbProductManager;
     }
+
     public void setDBProductManager(DBProductManager dbProductManager) {
         MainSingleton.dbProductManager = dbProductManager;
     }
@@ -78,6 +79,7 @@ public class MainSingleton {
     public DBListProductManager getDBListProductManager() {
         return dbListProductManager;
     }
+
     public void setDBListProductManager(DBListProductManager dbListProductManager) {
         MainSingleton.dbListProductManager = dbListProductManager;
     }

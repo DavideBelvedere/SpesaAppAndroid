@@ -46,22 +46,6 @@ public class DataAccessUtils {
         lista.remove(position);
     }
 
-    public static void initDataSourceProduct(Context context) {
-        List<String> lista =new ArrayList<>();
-
-        DBUtility.initProductDB(context);
-        Cursor result= DBUtility.getDBProductManager().fetchAllProducts();
-
-        if (result == null || result.getCount() == 0) {
-        } else {
-            while (result.moveToNext()){
-                lista.add(result.getString(result.getColumnIndexOrThrow(DBListManager.KEY_NAME)));
-            }
-            result.close();
-        }
-        MainSingleton.getInstance().addItemProductList(lista);
-
-    }
 
     public static List<String> getDataSourceProductList(Context context){
         return MainSingleton.getInstance().getItemProductList();

@@ -9,12 +9,13 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.davidebelvedere.spesaapp.data.DatabaseHelper;
 
 public class DBProductManager {
-    private static final String KEY_ID = "_id";
+
     private SQLiteDatabase database;
     private DatabaseHelper dbHelper;
     private Context context;
 
     public static final String KEY_NAME = "name";
+    public static final String KEY_ID = "_id";
     private static final String DATABASE_TABLE = "product";
 
     public DBProductManager(Context context) {
