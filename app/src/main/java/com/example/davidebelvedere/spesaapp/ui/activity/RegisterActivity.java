@@ -130,7 +130,7 @@ public class RegisterActivity extends Activity {
 
     protected void dispatchGetPictureFromGallery() {
         Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
         intent.setType("image/*");
         intent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
         this.startActivityForResult(intent, 1);

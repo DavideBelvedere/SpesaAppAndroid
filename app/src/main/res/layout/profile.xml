@@ -35,7 +35,6 @@
             android:layout_height="180dp"
             android:gravity="center"
             android:id="@+id/imgProfile"
-            android:background="@color/colorPrimary"
             android:padding="30dp"/>
 
         <TextView

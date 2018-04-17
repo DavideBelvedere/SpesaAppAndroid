@@ -82,5 +82,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         DBUtility.getDBUserManager().close();
+        finish();
     }
 }
