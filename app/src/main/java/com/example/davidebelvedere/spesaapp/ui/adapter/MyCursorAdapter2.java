@@ -33,15 +33,15 @@ public class MyCursorAdapter2 extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.item_layout, parent, false);
+        return LayoutInflater.from(context).inflate(R.layout.product_layout, parent, false);
     }
 
     @Override
     public void bindView(View view, final Context context, final Cursor cursor) {
         // Find fields to populate in inflated template
-        ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
-        name = (TextView) view.findViewById(R.id.textView);
-        imageView.setImageResource(R.drawable.ic_launcher_foreground);
+
+        name = (TextView) view.findViewById(R.id.name);
+
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +101,7 @@ public class MyCursorAdapter2 extends CursorAdapter {
                 DBUtility.getDBListProductManager().updateProduct(listId, id, 2, oldId);
                 //swapCursor()
                 DBUtility.getDBListProductManager().close();
-                notifyDataSetChanged();
+                //notifyDataSetChanged();
                 dialog.cancel();
             }
         });
