@@ -24,7 +24,7 @@ public class DataAccessUtils {
             lista.clear();
             while (result.moveToNext()){
 
-                lista.add(new ProductList(result.getString(result.getColumnIndexOrThrow(DBListManager.KEY_NAME))));
+                lista.add(new ProductList(result.getString(result.getColumnIndexOrThrow(DBListManager.KEY_NAME)),result.getInt(result.getColumnIndexOrThrow(DBListManager.KEY_ID))));
             }
             result.close();
         }
@@ -35,11 +35,17 @@ public class DataAccessUtils {
         return MainSingleton.getInstance().getItemList();
     }
 
-    public static int addItem(String item){
+    public static int addItem(String item,int id){
         List<ProductList> lista = MainSingleton.getInstance().getItemList();
-        lista.add(new ProductList(item));
+        lista.add(new ProductList(item,id));
         MainSingleton.getInstance().addItemList(lista);
         return (lista.size()-1);
+    }
+
+    public static void changeItem(int position,String name){
+        List<ProductList> lista = MainSingleton.getInstance().getItemList();
+        ProductList listaDaCambiare= lista.get(position);
+        listaDaCambiare.setName(name);
     }
 
     public static void removeItem(int position){

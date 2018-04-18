@@ -2,7 +2,9 @@ package com.example.davidebelvedere.spesaapp.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -142,7 +144,7 @@ public class UserListActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 int id = (int) DBUtility.getDBListManager().addList(input.getText().toString(), MainSingleton.getCurrentUser().getUsername());
-                int pos = DataAccessUtils.addItem(input.getText().toString());
+                int pos = DataAccessUtils.addItem(input.getText().toString(),id);
                 DBUtility.getDBListManager().addList(input.getText().toString(), MainSingleton.getCurrentUser().getUsername());
                 dialog.cancel();
                 recyclerAdapter.notifyItemInserted(pos);
