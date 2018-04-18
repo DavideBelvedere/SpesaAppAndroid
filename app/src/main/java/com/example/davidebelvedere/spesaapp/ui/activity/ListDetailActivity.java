@@ -1,6 +1,7 @@
 package com.example.davidebelvedere.spesaapp.ui.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -20,6 +22,7 @@ import com.example.davidebelvedere.spesaapp.data.MainSingleton;
 import com.example.davidebelvedere.spesaapp.logic.DBProductManager;
 import com.example.davidebelvedere.spesaapp.logic.DBUtility;
 import com.example.davidebelvedere.spesaapp.R;
+import com.example.davidebelvedere.spesaapp.logic.SharedPreferenceUtility;
 import com.example.davidebelvedere.spesaapp.ui.adapter.MyCursorAdapter2;
 
 /**
@@ -38,6 +41,9 @@ class ListDetailActivity extends AppCompatActivity {
         setContentView(R.layout.list_detail_layout);
         Bundle bundle = getIntent().getExtras();
         listId = bundle.getInt("idLista");
+        String listName = bundle.getString("nomeLista");
+        TextView listNameText = (TextView) findViewById(R.id.listName);
+        listNameText.setText(listName);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
 
         setSupportActionBar(toolbar);
@@ -61,7 +67,7 @@ class ListDetailActivity extends AppCompatActivity {
         DBUtility.initProductDB(this);
 
         Cursor result = DBUtility.getDBListProductManager().fetchAllProducts(listId);
-        customAdapter = new MyCursorAdapter2(this, result,listId);
+        customAdapter = new MyCursorAdapter2(this, result, listId);
         lista = findViewById(R.id.listView);
         lista.setAdapter(customAdapter);
     }
@@ -117,10 +123,20 @@ class ListDetailActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
             return true;
+        } else if (id == R.id.logout) {
+            SharedPreferenceUtility.logout(this);
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
+        } else {
+
+            return super.onOptionsItemSelected(item);
         }
 
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.example.davidebelvedere.spesaapp.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 import com.example.davidebelvedere.spesaapp.R;
 import com.example.davidebelvedere.spesaapp.SwipeController;
 import com.example.davidebelvedere.spesaapp.data.MainSingleton;
+import com.example.davidebelvedere.spesaapp.logic.DBListManager;
 import com.example.davidebelvedere.spesaapp.logic.DBUtility;
 import com.example.davidebelvedere.spesaapp.logic.DataAccessUtils;
 import com.example.davidebelvedere.spesaapp.logic.SharedPreferenceUtility;
@@ -36,6 +39,7 @@ public class UserListActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     RecyclerAdapter recyclerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         DataAccessUtils.initDataSource(this);
@@ -45,7 +49,7 @@ public class UserListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
 
         setSupportActionBar(toolbar);
-
+        DBUtility.initListDB(getApplicationContext());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -62,14 +66,19 @@ public class UserListActivity extends AppCompatActivity {
                 new RecyclerAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(int item) {
+                        Cursor result = DBUtility.getDBListManager().fetchListById(item);
                         Intent intent = new Intent(UserListActivity.this, ListDetailActivity.class);
                         intent.putExtra("idLista", item);
+
+                        result.moveToNext();
+
+                     intent.putExtra("nomeLista", result.getString(result.getColumnIndexOrThrow(DBListManager.KEY_NAME)));
                         startActivity(intent);
                     }
                 }, new RecyclerAdapter.OnItemLongClickListener() {
             @Override
-            public void onItemLongClick(int item,int position) {
-                showListUpdatewAlertDialog(item,position);
+            public void onItemLongClick(int item, int position) {
+                showListUpdatewAlertDialog(item, position);
             }
         });
         recyclerView.setAdapter(recyclerAdapter);
@@ -88,9 +97,9 @@ public class UserListActivity extends AppCompatActivity {
         builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                DBUtility.initListDB(getApplicationContext());
-                DBUtility.getDBListManager().updateList(item,input.getText().toString(), MainSingleton.getCurrentUser().getUsername());
-                DataAccessUtils.changeItem(position,input.getText().toString());
+
+                DBUtility.getDBListManager().updateList(item, input.getText().toString(), MainSingleton.getCurrentUser().getUsername());
+                DataAccessUtils.changeItem(position, input.getText().toString());
                 recyclerAdapter.notifyItemChanged(position);
                 dialog.cancel();
             }
@@ -118,17 +127,18 @@ public class UserListActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
             return true;
-        } else if(id == R.id.logout){
+        } else if (id == R.id.logout) {
             SharedPreferenceUtility.logout(this);
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
             return true;
-        }else {
+        } else {
 
             return super.onOptionsItemSelected(item);
         }
     }
+
     public void showAddListAlertDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -157,11 +167,15 @@ public class UserListActivity extends AppCompatActivity {
         });
         builder.show();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(DBUtility.getDBUserManager()!=null) {
+        if (DBUtility.getDBUserManager() != null) {
             DBUtility.getDBUserManager().close();
+        }
+        if (DBUtility.getDBListManager()!= null) {
+            DBUtility.getDBListManager().close();
         }
     }
 }
