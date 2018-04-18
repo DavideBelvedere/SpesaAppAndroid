@@ -12,4 +12,8 @@
     <color name="grey">#999999</color>
     <color name="blue">#235383</color>
 
+    <!--Dots Color-->
+    <color name="active_dots">#235383</color>
+    <color name="inactive_dots">#a6a6a6</color>
+
 </resources>
