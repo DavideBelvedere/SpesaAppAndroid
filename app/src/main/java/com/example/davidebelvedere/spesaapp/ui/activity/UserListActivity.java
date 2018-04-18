@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,17 +14,17 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.davidebelvedere.spesaapp.R;
-import com.example.davidebelvedere.spesaapp.SwipeController;
 import com.example.davidebelvedere.spesaapp.data.MainSingleton;
 import com.example.davidebelvedere.spesaapp.logic.DBUtility;
 import com.example.davidebelvedere.spesaapp.logic.DataAccessUtils;
+import com.example.davidebelvedere.spesaapp.R;
+import com.example.davidebelvedere.spesaapp.logic.SharedPreferenceUtility;
 import com.example.davidebelvedere.spesaapp.logic.SharedPreferenceUtility;
 import com.example.davidebelvedere.spesaapp.ui.adapter.RecyclerAdapter;
+import com.example.davidebelvedere.spesaapp.SwipeController;
 
 /**
  * Created by corsista on 09/04/2018.
@@ -39,8 +40,11 @@ public class UserListActivity extends AppCompatActivity {
         DataAccessUtils.initDataSource(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_list_layout);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+
         setSupportActionBar(toolbar);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -50,27 +54,52 @@ public class UserListActivity extends AppCompatActivity {
             }
         });
 
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView= findViewById(R.id.recyclerView);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerAdapter = new RecyclerAdapter(DataAccessUtils.getDataSourceItemList(this),
                 new RecyclerAdapter.OnItemClickListener() {
                     @Override
-                    public void onItemClick(String item) {
+                    public void onItemClick(int item) {
                         Toast toast = Toast.makeText(getApplicationContext(), item, Toast.LENGTH_SHORT);
                         toast.show();
                     }
                 }, new RecyclerAdapter.OnItemLongClickListener() {
             @Override
-            public void onItemLongClick(String item) {
-                Toast toast = Toast.makeText(getApplicationContext(), item + " allungato", Toast.LENGTH_SHORT);
-                toast.show();
+            public void onItemLongClick(int item,int position) {
+                showListUpdatewAlertDialog(item,position);
             }
         });
         recyclerView.setAdapter(recyclerAdapter);
         SwipeController swipeController = new SwipeController(this);
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
         itemTouchhelper.attachToRecyclerView(recyclerView);
+    }
+
+    private void showListUpdatewAlertDialog(final int item, final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Change List name");
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+        builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DBUtility.initListDB(getApplicationContext());
+                DBUtility.getDBListManager().updateList(item,input.getText().toString(), SharedPreferenceUtility.getCurrentUser(getApplicationContext()));
+                DataAccessUtils.changeItem(position,input.getText().toString());
+                recyclerAdapter.notifyItemChanged(position);
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
 
     @Override
@@ -112,6 +141,7 @@ public class UserListActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                int id = (int) DBUtility.getDBListManager().addList(input.getText().toString(), MainSingleton.getCurrentUser().getUsername());
                 int pos = DataAccessUtils.addItem(input.getText().toString());
                 DBUtility.getDBListManager().addList(input.getText().toString(), MainSingleton.getCurrentUser().getUsername());
                 dialog.cancel();
@@ -126,10 +156,9 @@ public class UserListActivity extends AppCompatActivity {
         });
         builder.show();
     }
-
     @Override
-    protected void onRestart() {
-        super.onRestart();
-
+    protected void onDestroy() {
+        super.onDestroy();
+        DBUtility.getDBUserManager().close();
     }
 }

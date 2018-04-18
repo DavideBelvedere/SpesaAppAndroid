@@ -45,7 +45,7 @@ public class SharedPreferenceUtility {
         SharedPreferences sharedPref = context.getSharedPreferences(FILEONPREFERENCES, Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String user = sharedPref.getString(USER, "");
-        if (!user.equals("")) {
+        if (user != "") {
             MainSingleton.setCurrentUser(gson.fromJson(user, User.class));
         }
     }
@@ -71,6 +71,13 @@ public class SharedPreferenceUtility {
         editor.clear();
         editor.commit();
 
+    }
+
+    public static String getCurrentUser(Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences(FILEONPREFERENCES, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String user = sharedPref.getString(USER,"");
+        return gson.fromJson(user, User.class).getName();
     }
 
 
