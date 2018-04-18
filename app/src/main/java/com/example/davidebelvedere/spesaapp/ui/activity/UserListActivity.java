@@ -89,7 +89,7 @@ public class UserListActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 DBUtility.initListDB(getApplicationContext());
-                DBUtility.getDBListManager().updateList(item,input.getText().toString(), SharedPreferenceUtility.getCurrentUser(getApplicationContext()));
+                DBUtility.getDBListManager().updateList(item,input.getText().toString(), MainSingleton.getCurrentUser().getUsername());
                 DataAccessUtils.changeItem(position,input.getText().toString());
                 recyclerAdapter.notifyItemChanged(position);
                 dialog.cancel();
@@ -160,6 +160,8 @@ public class UserListActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        DBUtility.getDBUserManager().close();
+        if(DBUtility.getDBUserManager()!=null) {
+            DBUtility.getDBUserManager().close();
+        }
     }
 }
