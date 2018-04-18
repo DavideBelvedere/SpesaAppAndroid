@@ -31,7 +31,7 @@ public class MyCursorAdapter2 extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.list_detail_layout, parent, false);
+        return LayoutInflater.from(context).inflate(R.layout.product_layout, parent, false);
     }
 
     @Override
