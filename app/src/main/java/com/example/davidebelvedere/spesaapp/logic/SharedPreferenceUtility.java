@@ -45,7 +45,7 @@ public class SharedPreferenceUtility {
         SharedPreferences sharedPref = context.getSharedPreferences(FILEONPREFERENCES, Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String user = sharedPref.getString(USER, "");
-        if (user != "") {
+        if (!user.equals("")) {
             MainSingleton.setCurrentUser(gson.fromJson(user, User.class));
         }
     }
@@ -62,6 +62,15 @@ public class SharedPreferenceUtility {
         cal.setTimeInMillis(time);
 
         return cal.get(Calendar.MONTH);
+    }
+
+    public static void logout(Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences(FILEONPREFERENCES, Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();
+        editor.commit();
+
     }
 
 

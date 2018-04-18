@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name">SpesaApp</string>
 
+    <string name="tab_1">FirstTutorial</string>
+    <string name="tab_2">SecondTutorial</string>
+    <string name="tab_3">ThirdTutorial</string>
+    <string name="title_fragment_1"><b>Crea</b> e <b>organizza</b> le tue liste</string>
+    <string name="title_fragment_2"><b>Inserisci</b> gli articoli</string>
+    <string name="title_fragment_3"><b>Fai la spesa</b></string>
+    <string name="subtitle_fragment_1">Le tue liste della spesa saranno sempre a disposizione! <br /> Organizzale in base alle tue esigenze</string>
+    <string name="subtitle_fragment_2">Aggiorna la tua lista con gli articoli che vuoi acquistare</string>
+    <string name="subtitle_fragment_3">Fai la spesa e aggiorna la tua lista</string>
+
 
 
     <string name="accedi">Accedi</string>
@@ -19,5 +29,10 @@
 
     <string name="alert_ok">OK</string>
     <string name="alert_cancel">CANCEL</string>
+
+    <string name="name_profile">Mario Rossi</string>
+
+
+    <string name="profileSubtitle">Ecco i dati del tuo account</string>
 
 </resources>

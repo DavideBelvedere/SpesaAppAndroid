@@ -3,6 +3,8 @@
     package="com.example.davidebelvedere.spesaapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,6 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.activity.TutorialActivity">
+        </activity>
         <activity android:name=".ui.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -24,7 +28,8 @@
         </activity>
         <activity android:name=".ui.activity.RegisterActivity" android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
+        <activity android:name=".ui.activity.ProfileActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -43,9 +43,14 @@ public class DBUserManager {
         values.put(KEY_NAME, name);
         values.put(KEY_SURNAME, surname);
         values.put(KEY_EMAIL, email);
-        values.put(KEY_PASSWORD, password);
+        if(!password.equals("")) {
+            values.put(KEY_PASSWORD, password);
+        }
         values.put(KEY_ISFIRST, firstTime);
-        values.put(KEY_IMGPROFILE, imgProfile);
+
+        if(!imgProfile.equals("")) {
+            values.put(KEY_IMGPROFILE, imgProfile);
+        }
 
         return values;
     }
@@ -56,13 +61,19 @@ public class DBUserManager {
         return database.insertOrThrow(DATABASE_TABLE, null, initialValues);
     }
 
-    public boolean updateUser(String username, String email, String name, String surname, String password, int firstTime, String imgProfile) {
-        ContentValues updateValues = createContentValues(username, email, name, surname, password, firstTime, imgProfile);
-        return database.update(DATABASE_TABLE, updateValues, KEY_USERNAME + "=" + username, null) > 0;
+
+
+    public boolean updateUser(String username, String email, String name, String surname,  String password, int firstTime, String imgProfile) {
+        ContentValues updateValues = createContentValues(username, email, name, surname,password, firstTime, imgProfile);
+        return database.update(DATABASE_TABLE, updateValues, KEY_USERNAME + "=?" ,  new String[]{username}) > 0;
     }
 
     public boolean deleteUser(String username) {
         return database.delete(DATABASE_TABLE, KEY_USERNAME + "=" + username, null) > 0;
+    }
+
+    public Cursor getUser(String username) {
+        return database.query(DATABASE_TABLE,new String[]{KEY_USERNAME, KEY_NAME, KEY_SURNAME, KEY_EMAIL, KEY_IMGPROFILE},KEY_USERNAME + "=?", new String[]{username},null,null,null);
     }
 
     public Cursor fetchAllUser() {

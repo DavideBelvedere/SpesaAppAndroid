@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#59afe1</color>
+    <color name="colorPrimaryDark">#295067</color>
+    <color name="colorAccent">@android:color/holo_orange_light</color>
+
+    <!--App colors-->
+    <color name="lightRed">#FFCCCB</color>
+    <color name="lightGreen">#BFEE90</color>
+    <color name="lightBlue">#ADD8E6</color>
+
+    <color name="grey">#999999</color>
+    <color name="blue">#235383</color>
+
+    <!--Dots Color-->
+    <color name="active_dots">#235383</color>
+    <color name="inactive_dots">#a6a6a6</color>
+
+
+
+    <color name="colorText">#006680</color>
+
     <color name="buttonBackground">#68cefa</color>
     <color name="white">#ffffff</color>
     <color name="transparent">#00ffffff</color>

@@ -3,7 +3,6 @@ package com.example.davidebelvedere.spesaapp.logic;
 import android.content.Context;
 import android.database.Cursor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.example.davidebelvedere.spesaapp.data.MainSingleton;
@@ -15,14 +14,16 @@ import com.example.davidebelvedere.spesaapp.data.ProductList;
 
 public class DataAccessUtils {
     public static void initDataSource(Context context) {
-        List<ProductList> lista =new ArrayList<>();
+        List<ProductList> lista =MainSingleton.getInstance().getItemList();
 
         DBUtility.initListDB(context);
         Cursor result= DBUtility.getDBListManager().fetchAllLists();
 
-        if (result == null || result.getCount() == 0) {
-        } else {
+        if (result != null && result.getCount() > 0) {
+
+            lista.clear();
             while (result.moveToNext()){
+
                 lista.add(new ProductList(result.getString(result.getColumnIndexOrThrow(DBListManager.KEY_NAME))));
             }
             result.close();

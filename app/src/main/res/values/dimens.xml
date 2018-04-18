@@ -4,14 +4,14 @@
     <dimen name="marginLinearLogin">40dp</dimen>
     <dimen name="linearLoginMarginTop">25dp</dimen>
     <dimen name="littleMargin">15dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="loginTitle">18sp</dimen>
     <dimen name="loginTextView">14sp</dimen>
     <dimen name="registerTextView">11sp</dimen>
-
     <dimen name="registrati">21sp</dimen>
 
-    <dimen name="fab_margin">16dp</dimen>
+
 
 
 </resources>

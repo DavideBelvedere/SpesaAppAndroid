@@ -1,8 +1,6 @@
 package com.example.davidebelvedere.spesaapp.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,13 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.davidebelvedere.spesaapp.R;
-import com.example.davidebelvedere.spesaapp.data.MainSingleton;
 import com.example.davidebelvedere.spesaapp.data.User;
 import com.example.davidebelvedere.spesaapp.logic.DBUserManager;
 import com.example.davidebelvedere.spesaapp.logic.DBUtility;
-import com.example.davidebelvedere.spesaapp.logic.DataAccessUtils;
 import com.example.davidebelvedere.spesaapp.logic.SharedPreferenceUtility;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,12 +19,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (SharedPreferenceUtility.isUserValid(getApplicationContext())) {
+        boolean isUserValid = SharedPreferenceUtility.isUserValid(getApplicationContext());
+        if (isUserValid) {
             SharedPreferenceUtility.saveCurrentUser(getApplicationContext());
             Intent intent = null;
             intent = new Intent(MainActivity.this, UserListActivity.class);
             startActivity(intent);
+            finish();
 
             //Toast.makeText(getApplicationContext(), MainSingleton.getCurrentUser().toString(), Toast.LENGTH_LONG).show();
         } else {
@@ -50,18 +46,20 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "PASSWORD O USERNAME ERRATI", Toast.LENGTH_LONG).show();
                     } else {
                         result.moveToFirst();
-                        //Toast.makeText(getApplicationContext(), "" + result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_NAME)), Toast.LENGTH_LONG).show();
                         User user = new User(result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_USERNAME)), result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_NAME)), result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_SURNAME)), result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_EMAIL)), result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_IMGPROFILE)));
                         SharedPreferenceUtility.writeLoggedUserOnSharedPref(getApplicationContext(), user);
                         SharedPreferenceUtility.saveCurrentUser(getApplicationContext());
+
                         Intent intent = null;
-                        if ((result.getInt(result.getColumnIndexOrThrow(DBUserManager.KEY_USERNAME))) == 0) {
+                        if (result.getInt(result.getColumnIndexOrThrow(DBUserManager.KEY_ISFIRST)) == 0) {
+                            intent = new Intent(MainActivity.this, TutorialActivity.class);
+                        } else {
+
                             intent = new Intent(MainActivity.this, UserListActivity.class);
 
-                        } else {
-                             intent = new Intent(MainActivity.this, UserListActivity.class);
                         }
                         startActivity(intent);
+                        finish();
                     }
 
 
@@ -81,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        DBUtility.getDBUserManager().close();
+        if (DBUtility.getDBUserManager() != null) {
+            DBUtility.getDBUserManager().close();
+        }
     }
 }

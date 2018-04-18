@@ -1,6 +1,7 @@
 package com.example.davidebelvedere.spesaapp.logic;
 
 import android.content.Context;
+import android.net.Uri;
 
 import com.example.davidebelvedere.spesaapp.data.MainSingleton;
 
@@ -28,6 +29,15 @@ public class DBUtility {
 
     public static DBListManager getDBListManager() {
         return MainSingleton.getInstance().getDBListManager();
+    }
+    public static String getStringFromUri(Uri uri){
+        String stringUri;
+        stringUri = uri.toString();
+        return stringUri;
+    }
+    public static Uri getUriFromString(String stringUri){
+        Uri uri = Uri.parse(stringUri);
+        return uri;
     }
 
 }
