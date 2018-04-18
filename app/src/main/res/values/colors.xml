@@ -8,8 +8,19 @@
     <color name="lightRed">#FFCCCB</color>
     <color name="lightGreen">#BFEE90</color>
     <color name="lightBlue">#ADD8E6</color>
-    <color name="white">#FFFFFF</color>
+
     <color name="grey">#999999</color>
     <color name="blue">#235383</color>
 
+    <!--Dots Color-->
+    <color name="active_dots">#235383</color>
+    <color name="inactive_dots">#a6a6a6</color>
+
+
+
+    <color name="colorText">#006680</color>
+
+    <color name="buttonBackground">#68cefa</color>
+    <color name="white">#ffffff</color>
+    <color name="transparent">#00ffffff</color>
 </resources>

@@ -10,4 +10,29 @@
     <string name="subtitle_fragment_1">Le tue liste della spesa saranno sempre a disposizione! <br /> Organizzale in base alle tue esigenze</string>
     <string name="subtitle_fragment_2">Aggiorna la tua lista con gli articoli che vuoi acquistare</string>
     <string name="subtitle_fragment_3">Fai la spesa e aggiorna la tua lista</string>
+
+
+
+    <string name="accedi">Accedi</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="registrati">Registrati</string>
+    <string name="titleRegistrati">Registrati a SpesaApp</string>
+    <string name="registrato">Non sei registrato?</string>
+
+
+    <string name="nome">Nome</string>
+    <string name="cognome">Cognome</string>
+    <string name="email">Email</string>
+    <string name="already">Ho già un account</string>
+
+
+    <string name="alert_ok">OK</string>
+    <string name="alert_cancel">CANCEL</string>
+
+    <string name="name_profile">Mario Rossi</string>
+
+
+    <string name="profileSubtitle">Ecco i dati del tuo account</string>
+
 </resources>
