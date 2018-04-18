@@ -35,4 +35,7 @@
 
     <string name="profileSubtitle">Ecco i dati del tuo account</string>
 
+    <string name="nomeProdotto">Prodotto</string>
+
+    <string name="quantita">quantita</string>
 </resources>

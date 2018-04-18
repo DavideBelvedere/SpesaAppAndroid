@@ -49,8 +49,8 @@ public class DBListManager {
         return database.query(DATABASE_TABLE,null, KEY_USERNAME + "=?", new String[]{MainSingleton.getCurrentUser().getUsername()}, null, null, null);
     }
 
-    public Cursor fetchListByName(String nome) {
-        return database.query(DATABASE_TABLE, new String[]{KEY_ID}, KEY_NAME + "=?", new String[]{nome}, null, null, null);
+    public Cursor fetchListById(int id) {
+        return database.query(DATABASE_TABLE, new String[]{KEY_NAME}, KEY_ID + "=?", new String[]{""+id}, null, null, null);
     }
 
     public void deleteList(int id){
