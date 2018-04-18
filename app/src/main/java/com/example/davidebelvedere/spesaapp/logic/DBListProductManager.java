@@ -48,6 +48,7 @@ public class DBListProductManager {
     }
 
     public long addListProduct(int lista, int prodotto, int quantità) {
+
         ContentValues initialValues = createContentValues(lista,prodotto,quantità);
         return database.insertOrThrow(DATABASE_TABLE, null, initialValues);
     }
