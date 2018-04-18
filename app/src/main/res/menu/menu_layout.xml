@@ -2,9 +2,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.corsista.progettofinale.MainActivity">
+
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="Dettagli Profilo"
-        app:showAsAction="never" />
+
+        />
+    <item
+        android:title="Logout"
+        android:orderInCategory="101"
+        android:id="@+id/logout"
+        />
+
+
+
 </menu>

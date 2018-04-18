@@ -28,17 +28,9 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
-        if (toolbar != null) {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
-        }
 
         TextView title = (TextView) findViewById(R.id.title);
         TextView name = (TextView) findViewById(R.id.name);
@@ -48,21 +40,21 @@ public class ProfileActivity extends AppCompatActivity {
         CircleImageView imgProfile = (CircleImageView) findViewById(R.id.imgProfile);
         DBUserManager dbUserManager = new DBUserManager(this);
         dbUserManager.open();
-        String usernameSearched=MainSingleton.getCurrentUser().getUsername();
+        String usernameSearched = MainSingleton.getCurrentUser().getUsername();
         Cursor result = dbUserManager.getUser(usernameSearched);
-        if(result.moveToFirst()){
-            title.setText("Benvenuto "+result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_USERNAME)));
+        if (result.moveToFirst()) {
+            title.setText("Benvenuto " + result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_USERNAME)));
             username.setText(result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_USERNAME)));
             name.setText(result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_NAME)));
             surname.setText(result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_SURNAME)));
             email.setText(result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_EMAIL)));
             //Log.d("uri2",""+DBUtility.getUriFromString(result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_IMGPROFILE))));
             //imgProfile.setImageURI(DBUtility.getUriFromString(result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_IMGPROFILE))));
-            try{
+            try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), DBUtility.getUriFromString(result.getString(result.getColumnIndexOrThrow(DBUserManager.KEY_IMGPROFILE))));
                 imgProfile.setImageBitmap(bitmap);
 
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
 
@@ -72,7 +64,6 @@ public class ProfileActivity extends AppCompatActivity {
         dbUserManager.close();
 
     }
-
 
 
 }

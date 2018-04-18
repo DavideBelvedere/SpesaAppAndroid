@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = null;
             intent = new Intent(MainActivity.this, UserListActivity.class);
             startActivity(intent);
+            finish();
 
             //Toast.makeText(getApplicationContext(), MainSingleton.getCurrentUser().toString(), Toast.LENGTH_LONG).show();
         } else {
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                             intent = new Intent(MainActivity.this, UserListActivity.class);
                         }
                         startActivity(intent);
+                        finish();
                     }
 
 
@@ -81,7 +83,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        DBUtility.getDBUserManager().close();
-        finish();
+        if( DBUtility.getDBUserManager()!=null) {
+            DBUtility.getDBUserManager().close();
+        }
     }
 }

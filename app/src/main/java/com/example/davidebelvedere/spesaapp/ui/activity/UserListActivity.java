@@ -22,6 +22,7 @@ import com.example.davidebelvedere.spesaapp.SwipeController;
 import com.example.davidebelvedere.spesaapp.data.MainSingleton;
 import com.example.davidebelvedere.spesaapp.logic.DBUtility;
 import com.example.davidebelvedere.spesaapp.logic.DataAccessUtils;
+import com.example.davidebelvedere.spesaapp.logic.SharedPreferenceUtility;
 import com.example.davidebelvedere.spesaapp.ui.adapter.RecyclerAdapter;
 
 /**
@@ -39,7 +40,6 @@ public class UserListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_list_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
-
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -83,13 +83,21 @@ public class UserListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        Intent intent = new Intent(this, ProfileActivity.class);
-        startActivity(intent);
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
-        return super.onOptionsItemSelected(item);
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+            return true;
+        } else if(id == R.id.logout){
+            SharedPreferenceUtility.logout(this);
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
+        }else {
+
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     public void showAddListAlertDialog() {
