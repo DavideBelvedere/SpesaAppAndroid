@@ -100,7 +100,7 @@ public class TutorialActivity extends AppCompatActivity {
                 }
 
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.setMargins(20,0,20,0);
+                params.setMargins(5,0,5,0);
 
                 Dots_Layout.addView(dots[i],params);
             }
