@@ -40,6 +40,13 @@ public class DBListProductManager {
         return values;
     }
 
+    private ContentValues updateContentValues(int lista, int quantità) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID_LIST,lista);
+        values.put(KEY_QUANTITA,quantità);
+        return values;
+    }
+
     public long addListProduct(int lista, int prodotto, int quantità) {
         ContentValues initialValues = createContentValues(lista,prodotto,quantità);
         return database.insertOrThrow(DATABASE_TABLE, null, initialValues);
@@ -49,12 +56,8 @@ public class DBListProductManager {
         return database.query(DATABASE_TABLE, null, KEY_ID_LIST+"=?",new String[]{""+id}, null, null, null);
     }
 
-    public void removeAll(){
-        database.delete(DATABASE_TABLE,null,null);
-    }
-
     public void updateProduct(int listId, int productId,int quantità) {
-        ContentValues updateValues = createContentValues(listId,productId,quantità);
+        ContentValues updateValues = updateContentValues(listId,quantità);
         database.update(DATABASE_TABLE,updateValues,KEY_ID_LIST+"=? AND "+KEY_ID_PRODUCT+"=?",new String[]{""+listId,""+productId});
     }
 }

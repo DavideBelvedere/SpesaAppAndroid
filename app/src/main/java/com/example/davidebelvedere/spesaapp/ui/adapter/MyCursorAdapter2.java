@@ -76,6 +76,8 @@ public class MyCursorAdapter2 extends CursorAdapter {
         builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                DBUtility.initListProductDB(context);
+                DBUtility.getDBListProductManager().updateProduct(listId,position,2);
                 dialog.cancel();
             }
         });
