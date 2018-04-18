@@ -52,4 +52,18 @@ public class DBListManager {
     public Cursor fetchListByName(String nome) {
         return database.query(DATABASE_TABLE, new String[]{KEY_ID}, KEY_NAME + "=?", new String[]{nome}, null, null, null);
     }
+
+    public void deleteList(int id){
+        database.delete(DATABASE_TABLE,KEY_ID+"=?",new String[]{""+id});
+    }
+
+    public void updateList(int item,String name,String username_fk) {
+
+        ContentValues values = createContentValues(name, username_fk);
+
+        if(username_fk!=""){
+            database.update(DATABASE_TABLE,values,KEY_ID+"=?",new String[]{""+item});
+
+        }
+    }
 }

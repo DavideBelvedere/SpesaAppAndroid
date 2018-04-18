@@ -64,5 +64,12 @@ public class SharedPreferenceUtility {
         return cal.get(Calendar.MONTH);
     }
 
+    public static String getCurrentUser(Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences(FILEONPREFERENCES, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String user = sharedPref.getString(USER,"");
+        return gson.fromJson(user, User.class).getName();
+    }
+
 
 }

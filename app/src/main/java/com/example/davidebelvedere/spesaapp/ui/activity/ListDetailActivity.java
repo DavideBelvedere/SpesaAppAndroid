@@ -61,8 +61,7 @@ class ListDetailActivity extends AppCompatActivity {
         DBUtility.initProductDB(this);
 
         Cursor result = DBUtility.getDBListProductManager().fetchAllProducts(listId);
-        customAdapter = new MyCursorAdapter2(this, result);
-
+        customAdapter = new MyCursorAdapter2(this, result,listId);
         lista = findViewById(R.id.listView);
         lista.setAdapter(customAdapter);
     }
@@ -101,10 +100,6 @@ class ListDetailActivity extends AppCompatActivity {
         builder.setNegativeButton(R.string.alert_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                DBUtility.getDBProductManager().removeAll();
-                Cursor result = DBUtility.getDBProductManager().fetchAllProducts();
-                customAdapter = new MyCursorAdapter2(getApplicationContext(), result);
-                lista.setAdapter(customAdapter);
                 dialog.cancel();
             }
         });

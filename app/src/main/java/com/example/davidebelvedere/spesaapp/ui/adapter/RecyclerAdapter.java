@@ -22,7 +22,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         void onItemClick(int item);
     }
     public interface OnItemLongClickListener{
-        void onItemLongClick(int item);
+        void onItemLongClick(int item,int position);
     }
 
     private List<ProductList> dataSet;
@@ -50,7 +50,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    longClickListener.onItemLongClick(itemId);
+                    longClickListener.onItemLongClick(itemId,getAdapterPosition());
                     return true;
                 }
             });
@@ -79,5 +79,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return dataSet.size();
     }
 
+    public void removeAt(int position){
+        dataSet.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, dataSet.size());
+    }
+
+    public ProductList getItemByPosition(int position){
+        return dataSet.get(position);
+    }
 
 }

@@ -46,6 +46,12 @@ public class DataAccessUtils {
         lista.remove(position);
     }
 
+    public static void changeItem(int position,String name){
+        List<ProductList> lista = MainSingleton.getInstance().getItemList();
+        ProductList listaDaCambiare= lista.get(position);
+        listaDaCambiare.setName(name);
+    }
+
 
     public static List<String> getDataSourceProductList(Context context){
         return MainSingleton.getInstance().getItemProductList();

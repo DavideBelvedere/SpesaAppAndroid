@@ -23,6 +23,7 @@ import com.example.davidebelvedere.spesaapp.data.MainSingleton;
 import com.example.davidebelvedere.spesaapp.logic.DBUtility;
 import com.example.davidebelvedere.spesaapp.logic.DataAccessUtils;
 import com.example.davidebelvedere.spesaapp.R;
+import com.example.davidebelvedere.spesaapp.logic.SharedPreferenceUtility;
 import com.example.davidebelvedere.spesaapp.ui.adapter.RecyclerAdapter;
 import com.example.davidebelvedere.spesaapp.SwipeController;
 
@@ -67,15 +68,40 @@ public class UserListActivity extends AppCompatActivity {
                     }
                 }, new RecyclerAdapter.OnItemLongClickListener() {
             @Override
-            public void onItemLongClick(int item) {
-                Toast toast = Toast.makeText(getApplicationContext(), item + " allungato", Toast.LENGTH_SHORT);
-                toast.show();
+            public void onItemLongClick(int item,int position) {
+                showListUpdatewAlertDialog(item,position);
             }
         });
         recyclerView.setAdapter(recyclerAdapter);
         SwipeController swipeController = new SwipeController(this);
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
         itemTouchhelper.attachToRecyclerView(recyclerView);
+    }
+
+    private void showListUpdatewAlertDialog(final int item, final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Change List name");
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+        builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DBUtility.initListDB(getApplicationContext());
+                DBUtility.getDBListManager().updateList(item,input.getText().toString(), SharedPreferenceUtility.getCurrentUser(getApplicationContext()));
+                DataAccessUtils.changeItem(position,input.getText().toString());
+                recyclerAdapter.notifyItemChanged(position);
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
 
     @Override

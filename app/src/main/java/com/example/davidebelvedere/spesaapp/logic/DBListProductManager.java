@@ -52,4 +52,9 @@ public class DBListProductManager {
     public void removeAll(){
         database.delete(DATABASE_TABLE,null,null);
     }
+
+    public void updateProduct(int listId, int productId,int quantità) {
+        ContentValues updateValues = createContentValues(listId,productId,quantità);
+        database.update(DATABASE_TABLE,updateValues,KEY_ID_LIST+"=? AND "+KEY_ID_PRODUCT+"=?",new String[]{""+listId,""+productId});
+    }
 }
