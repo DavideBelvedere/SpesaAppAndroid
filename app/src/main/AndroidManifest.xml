@@ -30,6 +30,10 @@
         </activity>
         <activity android:name=".ui.activity.ProfileActivity">
         </activity>
+
+        <activity android:name=".ui.activity.ListDetailActivity" android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
     </application>
 
 </manifest>

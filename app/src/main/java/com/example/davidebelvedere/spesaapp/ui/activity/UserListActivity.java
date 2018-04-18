@@ -23,7 +23,10 @@ import com.example.davidebelvedere.spesaapp.data.MainSingleton;
 import com.example.davidebelvedere.spesaapp.logic.DBUtility;
 import com.example.davidebelvedere.spesaapp.logic.DataAccessUtils;
 import com.example.davidebelvedere.spesaapp.logic.SharedPreferenceUtility;
+import com.example.davidebelvedere.spesaapp.R;
+import com.example.davidebelvedere.spesaapp.logic.SharedPreferenceUtility;
 import com.example.davidebelvedere.spesaapp.ui.adapter.RecyclerAdapter;
+import com.example.davidebelvedere.spesaapp.SwipeController;
 
 /**
  * Created by corsista on 09/04/2018.
@@ -33,14 +36,16 @@ public class UserListActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     RecyclerAdapter recyclerAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         DataAccessUtils.initDataSource(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_list_layout);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+
         setSupportActionBar(toolbar);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -56,21 +61,47 @@ public class UserListActivity extends AppCompatActivity {
         recyclerAdapter = new RecyclerAdapter(DataAccessUtils.getDataSourceItemList(this),
                 new RecyclerAdapter.OnItemClickListener() {
                     @Override
-                    public void onItemClick(String item) {
-                        Toast toast = Toast.makeText(getApplicationContext(), item, Toast.LENGTH_SHORT);
-                        toast.show();
+                    public void onItemClick(int item) {
+                        Intent intent = new Intent(UserListActivity.this, ListDetailActivity.class);
+                        intent.putExtra("idLista", item);
+                        startActivity(intent);
                     }
                 }, new RecyclerAdapter.OnItemLongClickListener() {
             @Override
-            public void onItemLongClick(String item) {
-                Toast toast = Toast.makeText(getApplicationContext(), item + " allungato", Toast.LENGTH_SHORT);
-                toast.show();
+            public void onItemLongClick(int item,int position) {
+                showListUpdatewAlertDialog(item,position);
             }
         });
         recyclerView.setAdapter(recyclerAdapter);
         SwipeController swipeController = new SwipeController(this);
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
         itemTouchhelper.attachToRecyclerView(recyclerView);
+    }
+
+    private void showListUpdatewAlertDialog(final int item, final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Change List name");
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+        builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DBUtility.initListDB(getApplicationContext());
+                DBUtility.getDBListManager().updateList(item,input.getText().toString(), SharedPreferenceUtility.getCurrentUser(getApplicationContext()));
+                DataAccessUtils.changeItem(position,input.getText().toString());
+                recyclerAdapter.notifyItemChanged(position);
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
 
     @Override
@@ -82,7 +113,6 @@ public class UserListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
 
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, ProfileActivity.class);
@@ -99,7 +129,6 @@ public class UserListActivity extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
         }
     }
-
     public void showAddListAlertDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -112,8 +141,10 @@ public class UserListActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                int pos = DataAccessUtils.addItem(input.getText().toString());
-                DBUtility.getDBListManager().addList(input.getText().toString(), MainSingleton.getCurrentUser().getUsername());
+            /*   int pos= DataAccessUtils.addItem(input.getText().toString());
+                DBUtility.getDBListManager().addList(input.getText().toString(), MainSingleton.getCurrentUser().getUsername());*/
+                int id = (int) DBUtility.getDBListManager().addList(input.getText().toString(), MainSingleton.getCurrentUser().getUsername());
+                int pos = DataAccessUtils.addItem(input.getText().toString(), id);
                 dialog.cancel();
                 recyclerAdapter.notifyItemInserted(pos);
             }
@@ -126,10 +157,9 @@ public class UserListActivity extends AppCompatActivity {
         });
         builder.show();
     }
-
     @Override
-    protected void onRestart() {
-        super.onRestart();
-
+    protected void onDestroy() {
+        super.onDestroy();
+        DBUtility.getDBUserManager().close();
     }
 }
