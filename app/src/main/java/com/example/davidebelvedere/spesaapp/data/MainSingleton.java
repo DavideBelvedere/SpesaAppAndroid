@@ -84,4 +84,5 @@ public class MainSingleton {
         MainSingleton.dbListProductManager = dbListProductManager;
     }
 
+
 }

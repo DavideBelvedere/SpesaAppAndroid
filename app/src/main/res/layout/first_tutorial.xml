@@ -18,7 +18,7 @@
                 android:layout_height="120dp"
                 android:gravity="center"
                 android:text="@string/title_fragment_1"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:textColor="@color/blue"/>
 
             <TextView
@@ -26,13 +26,13 @@
                 android:layout_height="100dp"
                 android:gravity="center"
                 android:text="@string/subtitle_fragment_1"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textColor="@color/blue"/>
 
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 android:layout_marginTop="30dp"
                 android:src="@drawable/ic_launcher" />
 

@@ -59,4 +59,6 @@ public class DBProductManager {
         return database.query(DATABASE_TABLE, new String[]{KEY_NAME}, KEY_ID + "=?",new String[]{id}, null, null, null);
 
     }
+
+
 }

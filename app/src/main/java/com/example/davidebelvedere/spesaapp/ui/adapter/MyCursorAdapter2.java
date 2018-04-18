@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.davidebelvedere.spesaapp.R;
 import com.example.davidebelvedere.spesaapp.logic.DBListProductManager;
+import com.example.davidebelvedere.spesaapp.logic.DBProductManager;
 import com.example.davidebelvedere.spesaapp.logic.DBUtility;
 import com.example.davidebelvedere.spesaapp.logic.DataAccessUtils;
 import com.example.davidebelvedere.spesaapp.logic.SharedPreferenceUtility;
@@ -23,10 +25,10 @@ import com.example.davidebelvedere.spesaapp.logic.SharedPreferenceUtility;
 public class MyCursorAdapter2 extends CursorAdapter {
     TextView name;
     final int listId;
-
-    public MyCursorAdapter2(Context context, Cursor cursor,int listId) {
+    MyCursorAdapter2 adapter=this;
+    public MyCursorAdapter2(Context context, Cursor cursor, int listId) {
         super(context, cursor, 0);
-        this.listId=listId;
+        this.listId = listId;
     }
 
     @Override
@@ -37,16 +39,20 @@ public class MyCursorAdapter2 extends CursorAdapter {
     @Override
     public void bindView(View view, final Context context, final Cursor cursor) {
         // Find fields to populate in inflated template
-        ImageView imageView= (ImageView) view.findViewById(R.id.imageView);
+        ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
         name = (TextView) view.findViewById(R.id.textView);
         imageView.setImageResource(R.drawable.ic_launcher_foreground);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast toast= Toast.makeText(context,"click",Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(context, "click", Toast.LENGTH_SHORT);
                 toast.show();
             }
         });
+        Cursor result = DBUtility.getDBProductManager().fetchProductById(cursor.getString(cursor.getColumnIndexOrThrow(DBListProductManager.KEY_ID_PRODUCT)));
+        result.moveToFirst();
+        final String productName = result.getString(0);
+        name.setText(result.getString(0));
         view.setOnLongClickListener(new View.OnLongClickListener() {
 
             public int getListId() {
@@ -55,18 +61,16 @@ public class MyCursorAdapter2 extends CursorAdapter {
 
             @Override
             public boolean onLongClick(View v) {
-                showEditAlertDialog(cursor.getPosition(),context,this.getListId());
+
+                showEditAlertDialog(cursor.getInt(cursor.getColumnIndexOrThrow(DBProductManager.KEY_ID)), context, this.getListId(), productName);
                 return false;
             }
         });
 
-        Cursor result= DBUtility.getDBProductManager().fetchProductById(cursor.getString(cursor.getColumnIndexOrThrow(DBListProductManager.KEY_ID_PRODUCT)));
-        result.moveToFirst();
-        name.setText(result.getString(0));
 
     }
 
-    private void showEditAlertDialog(final int position, final Context context, final int listId) {
+    private void showEditAlertDialog(final int position, final Context context, final int listId, final String productName) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Edit Product");
 
@@ -77,7 +81,27 @@ public class MyCursorAdapter2 extends CursorAdapter {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 DBUtility.initListProductDB(context);
-                DBUtility.getDBListProductManager().updateProduct(listId,position,2);
+                DBUtility.initProductDB(context);
+                int id;
+                Cursor result = DBUtility.getDBProductManager().fetchProductByName(String.valueOf(input.getText()));
+                if (result == null || result.getCount() == 0) {
+
+                    id = (int) DBUtility.getDBProductManager().addListProduct(String.valueOf(input.getText()));
+                    Log.d("ciao", id + "");
+                } else {
+                    result.moveToNext();
+                    id = result.getInt(result.getColumnIndexOrThrow(DBProductManager.KEY_ID));
+                }
+
+                result = DBUtility.getDBProductManager().fetchProductByName(String.valueOf(productName));
+                result.moveToNext();
+                int oldId = result.getInt(result.getColumnIndexOrThrow(DBProductManager.KEY_ID));
+                result.close();
+                DBUtility.getDBProductManager().close();
+                DBUtility.getDBListProductManager().updateProduct(listId, id, 2, oldId);
+                //swapCursor()
+                DBUtility.getDBListProductManager().close();
+                notifyDataSetChanged();
                 dialog.cancel();
             }
         });
