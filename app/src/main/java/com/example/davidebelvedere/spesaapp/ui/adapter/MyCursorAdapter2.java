@@ -43,8 +43,6 @@ public class MyCursorAdapter2 extends CursorAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast toast= Toast.makeText(context,"click",Toast.LENGTH_SHORT);
-                toast.show();
             }
         });
         view.setOnLongClickListener(new View.OnLongClickListener() {
@@ -55,7 +53,9 @@ public class MyCursorAdapter2 extends CursorAdapter {
 
             @Override
             public boolean onLongClick(View v) {
-                showEditAlertDialog(cursor.getPosition(),context,this.getListId());
+                cursor.moveToPosition(cursor.getPosition());
+                int pos=cursor.getInt(0);
+                showEditAlertDialog(pos,context,this.getListId());
                 return false;
             }
         });
@@ -84,6 +84,8 @@ public class MyCursorAdapter2 extends CursorAdapter {
         builder.setNeutralButton("Delete Product", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                DBUtility.initListProductDB(context);
+                DBUtility.getDBListProductManager().deleteProduct(listId,position);
                 dialog.cancel();
             }
         });

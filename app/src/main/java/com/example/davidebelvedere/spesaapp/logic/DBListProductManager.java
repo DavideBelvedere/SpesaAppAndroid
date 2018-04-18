@@ -61,4 +61,8 @@ public class DBListProductManager {
         ContentValues updateValues = updateContentValues(listId,quantità);
         database.update(DATABASE_TABLE,updateValues,KEY_ID_LIST+"=? AND "+KEY_ID_PRODUCT+"=?",new String[]{""+listId,""+productId});
     }
+
+    public void deleteProduct(int listId, int productId) {
+        database.delete(DATABASE_TABLE,KEY_ID_LIST+"=? AND "+KEY_ID_PRODUCT+"=?",new String[]{""+listId,""+productId});
+    }
 }
